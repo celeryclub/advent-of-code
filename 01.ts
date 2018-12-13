@@ -2,12 +2,10 @@ import getEachLine from './lib/getEachLine';
 
 async function _getNumbers(): Promise<number[]> {
   const numberStrings = await getEachLine('https://adventofcode.com/2018/day/1/input');
-  return numberStrings.map((number) => {
-    return parseInt(number);
-  });
+  return numberStrings.map((number) => parseInt(number));
 }
 
-async function _01() {
+async function part1() {
   const numbers = await _getNumbers();
 
   const total = numbers.reduce((accumulator, number) => {
@@ -17,7 +15,7 @@ async function _01() {
   return total;
 }
 
-async function _02() {
+async function part2() {
   const numbers = await _getNumbers();
 
   let frequency = 0;
@@ -42,5 +40,5 @@ async function _02() {
   }
 }
 
-_01().then((result) => console.log(`01: ${result}`));
-_02().then((result) => console.log(`02: ${result}`));
+part1().then((result) => console.log(`part 1: ${result}`));
+part2().then((result) => console.log(`part 2: ${result}`));

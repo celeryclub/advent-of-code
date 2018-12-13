@@ -38,4 +38,29 @@ async function part1() {
   return doubles * triples;
 }
 
+async function part2() {
+  const ids = await _getIds();
+
+  for (let index = 0; index < ids.length; index++) {
+    for (let index2 = 0; index2 < ids.length; index2++) {
+      let diffCount = 0;
+      let lastDiffIndex = 0;
+
+      for (let index3 = 0; index3 < ids[index2].length; index3++) {
+        const character = ids[index2].charAt(index3);
+
+        if (character !== ids[index].charAt(index3)) {
+          lastDiffIndex = index3;
+          diffCount++;
+        }
+      }
+
+      if (diffCount === 1) {
+        return ids[index].slice(0, lastDiffIndex) + ids[index].slice(lastDiffIndex + 1);
+      }
+    }
+  }
+}
+
 part1().then((result) => console.log(`part 1: ${result}`));
+part2().then((result) => console.log(`part 2: ${result}`))
