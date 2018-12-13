@@ -14,7 +14,7 @@ async function _01() {
     return accumulator + number;
   }, 0);
 
-  console.log(total);
+  return total;
 }
 
 async function _02() {
@@ -28,7 +28,6 @@ async function _02() {
     frequency = frequency + numbers[index];
 
     if (knownFrequencies[frequency.toString()]) {
-      console.log(frequency);
       return frequency;
     }
 
@@ -43,5 +42,5 @@ async function _02() {
   }
 }
 
-_01();
-_02();
+_01().then((result) => console.log(`01: ${result}`));
+_02().then((result) => console.log(`02: ${result}`));
