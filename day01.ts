@@ -1,7 +1,7 @@
-import _getEachLine from './_get';
+import getEachLine from './lib/getEachLine';
 
 async function _getNumbers(): Promise<number[]> {
-  const numberStrings = await _getEachLine('https://adventofcode.com/2018/day/1/input');
+  const numberStrings = await getEachLine('https://adventofcode.com/2018/day/1/input');
   return numberStrings.map((number) => {
     return parseInt(number);
   });
