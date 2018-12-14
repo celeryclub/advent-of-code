@@ -5,7 +5,7 @@ async function _getNumbers(): Promise<number[]> {
   return numberStrings.map((number) => parseInt(number));
 }
 
-async function part1() {
+async function part1(): Promise<number> {
   const numbers = await _getNumbers();
 
   const total = numbers.reduce((accumulator, number) => {
@@ -15,7 +15,7 @@ async function part1() {
   return total;
 }
 
-async function part2() {
+async function part2(): Promise<number> {
   const numbers = await _getNumbers();
 
   let frequency = 0;

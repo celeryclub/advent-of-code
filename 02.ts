@@ -4,7 +4,7 @@ async function _getIds(): Promise<string[]> {
   return await getEachLine('https://adventofcode.com/2018/day/2/input');
 }
 
-async function part1() {
+async function part1(): Promise<number> {
   const ids = await _getIds();
 
   let doubles = 0;
@@ -26,11 +26,11 @@ async function part1() {
 
     const characterCountValues = Object.values(previousCharacters);
 
-    if (characterCountValues.filter((mm) => mm === 2).length) {
+    if (characterCountValues.filter((characterCount) => characterCount === 2).length) {
       doubles++;
     }
 
-    if (characterCountValues.filter((mm) => mm === 3).length) {
+    if (characterCountValues.filter((characterCount) => characterCount === 3).length) {
       triples++;
     }
   });
@@ -38,7 +38,7 @@ async function part1() {
   return doubles * triples;
 }
 
-async function part2() {
+async function part2(): Promise<string> {
   const ids = await _getIds();
 
   for (let index = 0; index < ids.length; index++) {
