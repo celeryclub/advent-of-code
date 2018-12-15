@@ -1,8 +1,8 @@
-import * as url from 'url';
+import * as urlLib from 'url';
 import * as https from 'https';
 
-export default function _getEachLine(rawURL): Promise<string[]> {
-  const parsedURL = url.parse(rawURL);
+export function get(url: string): Promise<string> {
+  const parsedURL = urlLib.parse(url);
 
   return new Promise((resolve, reject) => {
     https.get(
@@ -14,18 +14,21 @@ export default function _getEachLine(rawURL): Promise<string[]> {
         },
       },
       (res) => {
-        let rawData = '';
+        let data = '';
 
-        res.on('data', (chunk) => { rawData += chunk; });
+        res.on('data', (chunk) => { data += chunk; });
         res.on('end', () => {
-          const splitData = rawData.split(new RegExp('\n'));
-          resolve(splitData.filter((item) => {
-            return item.length;
-          }));
+          resolve(data.trim());
         });
       }).on('error', (e) => {
         reject(`HTTP error: ${e.message}`);
       }
     );
   });
+}
+
+export async function getLines(url: string): Promise<string[]> {
+  const data = await get(url);
+
+  return data.split(/\n/);
 }
