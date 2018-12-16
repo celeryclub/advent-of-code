@@ -6,16 +6,14 @@ async function _getPolymer(): Promise<string> {
   return await get('https://adventofcode.com/2018/day/5/input');
 }
 
-function _match(char1, char2): boolean {
+function _match(char1: string, char2: string): boolean {
   return (
     char1 !== char2 &&
     char1.toLowerCase() === char2.toLowerCase()
   );
 }
 
-async function part1(): Promise<number> {
-  const polymer = await _getPolymer();
-
+function _reactedLength(polymer: string): number {
   let reactionCount = 0;
   let unmatchedIndexes = [];
   let index1;
@@ -68,4 +66,28 @@ async function part1(): Promise<number> {
   return(polymer.length - reactionCount * 2);
 }
 
+async function part1(): Promise<number> {
+  const polymer = await _getPolymer();
+
+  return _reactedLength(polymer);
+}
+
+async function part2(): Promise<number> {
+  const polymer = await _getPolymer();
+  let shortestPolymerLength;
+
+  for (let index = 65; index <= 90; index++) {
+    const characterToRemove = String.fromCharCode(index);
+    const shorterPolymer = polymer.replace(new RegExp(characterToRemove, 'ig'), '');
+    const reactedLength = _reactedLength(shorterPolymer);
+
+    if (!shortestPolymerLength || reactedLength < shortestPolymerLength) {
+      shortestPolymerLength = reactedLength;
+    }
+  }
+
+  return shortestPolymerLength;
+}
+
 part1().then((result) => console.log(`part 1: ${result}`));
+part2().then((result) => console.log(`part 2: ${result}`))
