@@ -1,13 +1,13 @@
 // https://adventofcode.com/2018/day/2
 
-import { getLines } from './lib/get';
+import { readLines } from '../lib/read';
 
-async function _getIds(): Promise<string[]> {
-  return await getLines('https://adventofcode.com/2018/day/2/input');
+function _getIds(): string[] {
+  return readLines('02');
 }
 
-async function part1(): Promise<number> {
-  const ids = await _getIds();
+function part1(): number {
+  const ids = _getIds();
 
   let doubles = 0;
   let triples = 0;
@@ -40,8 +40,8 @@ async function part1(): Promise<number> {
   return doubles * triples;
 }
 
-async function part2(): Promise<string> {
-  const ids = await _getIds();
+function part2(): string {
+  const ids = _getIds();
 
   for (let index = 0; index < ids.length; index++) {
     for (let index2 = 0; index2 < ids.length; index2++) {
@@ -64,5 +64,5 @@ async function part2(): Promise<string> {
   }
 }
 
-part1().then((result) => console.log(`part 1: ${result}`));
-part2().then((result) => console.log(`part 2: ${result}`))
+console.log(`part 1: ${part1()}`);
+console.log(`part 2: ${part2()}`);

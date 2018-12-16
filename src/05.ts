@@ -1,9 +1,9 @@
 // https://adventofcode.com/2018/day/5
 
-import { get } from './lib/get';
+import { read } from '../lib/read';
 
-async function _getPolymer(): Promise<string> {
-  return await get('https://adventofcode.com/2018/day/5/input');
+function _getPolymer(): string {
+  return read('05');
 }
 
 function _match(char1: string, char2: string): boolean {
@@ -66,14 +66,14 @@ function _reactedLength(polymer: string): number {
   return(polymer.length - reactionCount * 2);
 }
 
-async function part1(): Promise<number> {
-  const polymer = await _getPolymer();
+function part1(): number {
+  const polymer = _getPolymer();
 
   return _reactedLength(polymer);
 }
 
-async function part2(): Promise<number> {
-  const polymer = await _getPolymer();
+function part2(): number {
+  const polymer = _getPolymer();
   let shortestPolymerLength;
 
   for (let index = 65; index <= 90; index++) {
@@ -89,5 +89,5 @@ async function part2(): Promise<number> {
   return shortestPolymerLength;
 }
 
-part1().then((result) => console.log(`part 1: ${result}`));
-part2().then((result) => console.log(`part 2: ${result}`))
+console.log(`part 1: ${part1()}`);
+console.log(`part 2: ${part2()}`);

@@ -1,14 +1,14 @@
 // https://adventofcode.com/2018/day/1
 
-import { getLines } from './lib/get';
+import { readLines } from '../lib/read';
 
-async function _getNumbers(): Promise<number[]> {
-  const numberStrings = await getLines('https://adventofcode.com/2018/day/1/input');
+function _getNumbers(): number[] {
+  const numberStrings = readLines('01');
   return numberStrings.map((number) => parseInt(number));
 }
 
-async function part1(): Promise<number> {
-  const numbers = await _getNumbers();
+function part1(): number {
+  const numbers = _getNumbers();
 
   const total = numbers.reduce((accumulator, number) => {
     return accumulator + number;
@@ -17,8 +17,8 @@ async function part1(): Promise<number> {
   return total;
 }
 
-async function part2(): Promise<number> {
-  const numbers = await _getNumbers();
+function part2(): number {
+  const numbers = _getNumbers();
 
   let frequency = 0;
   let index = 0;
@@ -42,5 +42,5 @@ async function part2(): Promise<number> {
   }
 }
 
-part1().then((result) => console.log(`part 1: ${result}`));
-part2().then((result) => console.log(`part 2: ${result}`));
+console.log(`part 1: ${part1()}`);
+console.log(`part 2: ${part2()}`);
