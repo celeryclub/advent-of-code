@@ -41,7 +41,7 @@ function part2(): number {
   }
 }
 
-describe("2018/01", () => {
+describe("01", () => {
   test("part 1", () => {
     expect(part1()).toBe(590);
   });

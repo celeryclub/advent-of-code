@@ -51,7 +51,7 @@ function part2(): number {
   return bs[0] + bs[1] + bs[2];
 }
 
-describe("2022/01", () => {
+describe("01", () => {
   test("part 1", () => {
     expect(part1()).toBe(71023);
   });

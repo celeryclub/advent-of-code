@@ -63,7 +63,7 @@ function part2(): string {
   }
 }
 
-describe("2018/02", () => {
+describe("02", () => {
   test("part 1", () => {
     expect(part1()).toBe(7808);
   });

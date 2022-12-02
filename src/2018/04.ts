@@ -147,7 +147,7 @@ function part1() {
 // console.log(`part 1: ${part1()}`);
 // console.log(`part 2: ${part2()}`);
 
-describe.skip("2018/04", () => {
+describe.skip("04", () => {
   test("part 1", () => {
     expect(part1()).toBe(0);
   });

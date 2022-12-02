@@ -131,7 +131,7 @@ function part2(): number {
   return scores.reduce((a, b) => a + b);
 }
 
-describe("2022/02", () => {
+describe("02", () => {
   test("part 1", () => {
     expect(part1()).toBe(10816);
   });

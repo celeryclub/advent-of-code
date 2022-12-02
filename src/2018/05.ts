@@ -83,7 +83,7 @@ function part2(): number {
   return shortestPolymerLength;
 }
 
-describe("2018/05", () => {
+describe("05", () => {
   test("part 1", () => {
     expect(part1()).toBe(9526);
   });
