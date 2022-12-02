@@ -1,9 +1,9 @@
 // https://adventofcode.com/2018/day/2
 
-import { readLines } from '../lib/read';
+import { readLines } from "../lib/read";
 
 function _getIds(): string[] {
-  return readLines('02');
+  return readLines("02");
 }
 
 function part1(): number {
@@ -12,7 +12,7 @@ function part1(): number {
   let doubles = 0;
   let triples = 0;
 
-  ids.forEach((id) => {
+  ids.forEach(id => {
     let previousCharacters = {};
 
     for (let index = 0; index < id.length; index++) {
@@ -20,19 +20,18 @@ function part1(): number {
 
       if (previousCharacters[character]) {
         previousCharacters[character] = previousCharacters[character] + 1;
-      }
-      else {
+      } else {
         previousCharacters[character] = 1;
       }
     }
 
     const characterCountValues = Object.values(previousCharacters);
 
-    if (characterCountValues.filter((characterCount) => characterCount === 2).length) {
+    if (characterCountValues.filter(characterCount => characterCount === 2).length) {
       doubles++;
     }
 
-    if (characterCountValues.filter((characterCount) => characterCount === 3).length) {
+    if (characterCountValues.filter(characterCount => characterCount === 3).length) {
       triples++;
     }
   });

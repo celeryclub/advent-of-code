@@ -1,10 +1,10 @@
 // https://adventofcode.com/2018/day/1
 
-import { readLines } from '../lib/read';
+import { readLines } from "../lib/read";
 
 function _getNumbers(): number[] {
-  const numberStrings = readLines('01');
-  return numberStrings.map((number) => parseInt(number));
+  const numberStrings = readLines("01");
+  return numberStrings.map(number => parseInt(number));
 }
 
 function part1(): number {
@@ -35,8 +35,7 @@ function part2(): number {
 
     if (index < numbers.length - 1) {
       index++;
-    }
-    else {
+    } else {
       index = 0;
     }
   }

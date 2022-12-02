@@ -1,16 +1,13 @@
 // https://adventofcode.com/2018/day/5
 
-import { read } from '../lib/read';
+import { read } from "../lib/read";
 
 function _getPolymer(): string {
-  return read('05');
+  return read("05");
 }
 
 function _match(char1: string, char2: string): boolean {
-  return (
-    char1 !== char2 &&
-    char1.toLowerCase() === char2.toLowerCase()
-  );
+  return char1 !== char2 && char1.toLowerCase() === char2.toLowerCase();
 }
 
 function _reactedLength(polymer: string): number {
@@ -26,13 +23,11 @@ function _reactedLength(polymer: string): number {
     if (index1 === undefined && index2 === undefined) {
       index1 = 0;
       index2 = 1;
-    }
-    else {
+    } else {
       if (lastPassWasMatch) {
         index1 = unmatchedIndexes[unmatchedIndexes.length - 1] || index2;
         index2++;
-      }
-      else {
+      } else {
         index1 = index2;
         index2++;
       }
@@ -54,8 +49,7 @@ function _reactedLength(polymer: string): number {
       }
 
       lastPassWasMatch = true;
-    }
-    else {
+    } else {
       lastPassWasMatch = false;
       if (unmatchedIndexes.indexOf(index1) === -1) {
         unmatchedIndexes.push(index1);
@@ -63,7 +57,7 @@ function _reactedLength(polymer: string): number {
     }
   }
 
-  return(polymer.length - reactionCount * 2);
+  return polymer.length - reactionCount * 2;
 }
 
 function part1(): number {
@@ -78,7 +72,7 @@ function part2(): number {
 
   for (let index = 65; index <= 90; index++) {
     const characterToRemove = String.fromCharCode(index);
-    const shorterPolymer = polymer.replace(new RegExp(characterToRemove, 'ig'), '');
+    const shorterPolymer = polymer.replace(new RegExp(characterToRemove, "ig"), "");
     const reactedLength = _reactedLength(shorterPolymer);
 
     if (!shortestPolymerLength || reactedLength < shortestPolymerLength) {

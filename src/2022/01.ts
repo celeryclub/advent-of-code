@@ -1,6 +1,6 @@
 // https://adventofcode.com/2022/day/1
 
-import { readLines } from "../../lib/read";
+import { readLines } from "../lib/read";
 
 function _getNumbers(): number {
   const numberStrings = readLines("2022-01");
