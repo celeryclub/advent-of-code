@@ -8,8 +8,21 @@
   "engines": {
     "node": "^18"
   },
-  "scripts": {},
+  "scripts": {
+    "2022": "YEAR=2022 jest",
+    "tsc": "tsc --noEmit",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "lint": "npm run tsc && npm run prettier"
+  },
+  "dependencies": {
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.3"
+  },
   "devDependencies": {
-    "@types/node": "^18.11.10"
+    "@types/jest": "^29.2.3",
+    "@types/node": "^18.11.10",
+    "prettier": "^2.8.0",
+    "typescript": "^4.9.3"
   }
 }
