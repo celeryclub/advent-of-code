@@ -5,8 +5,11 @@
   "private": true,
   "author": "Steve Davis <steve@celery.club>",
   "license": "MIT",
+  "engines": {
+    "node": "^18"
+  },
   "scripts": {},
   "dependencies": {
-    "@types/node": "^10.12.12"
+    "@types/node": "^18.11.10"
   }
 }
