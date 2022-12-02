@@ -56,7 +56,7 @@ describe("2022/01", () => {
     expect(part1()).toBe(71023);
   });
 
-  test("part 1", () => {
+  test("part 2", () => {
     expect(part2()).toBe(206289);
   });
 });

@@ -83,5 +83,12 @@ function part2(): number {
   return shortestPolymerLength;
 }
 
-console.log(`part 1: ${part1()}`);
-console.log(`part 2: ${part2()}`);
+describe("2018/05", () => {
+  test("part 1", () => {
+    expect(part1()).toBe(9526);
+  });
+
+  test("part 2", () => {
+    expect(part2()).toBe(6694);
+  });
+});

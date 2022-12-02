@@ -9,6 +9,7 @@
     "node": "^18"
   },
   "scripts": {
+    "2018": "YEAR=2018 jest",
     "2022": "YEAR=2022 jest",
     "tsc": "tsc --noEmit",
     "prettier": "prettier --check .",

@@ -63,5 +63,12 @@ function part2(): string {
   }
 }
 
-console.log(`part 1: ${part1()}`);
-console.log(`part 2: ${part2()}`);
+describe("2018/02", () => {
+  test("part 1", () => {
+    expect(part1()).toBe(7808);
+  });
+
+  test("part 2", () => {
+    expect(part2()).toBe("efmyhuckqldtwjyvisipargno");
+  });
+});
