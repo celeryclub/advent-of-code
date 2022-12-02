@@ -9,7 +9,7 @@
     "node": "^18"
   },
   "scripts": {},
-  "dependencies": {
+  "devDependencies": {
     "@types/node": "^18.11.10"
   }
 }
