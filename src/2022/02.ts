@@ -97,7 +97,7 @@ function getScore(theirPlay: Play, myPlay: Play): number {
 }
 
 function getStrategyStrings(): string[] {
-  return readLines("2022-02");
+  return readLines("2022/02");
 }
 
 function part1(): number {

@@ -4,7 +4,7 @@ import { readLines } from "../lib/read";
 import range from "../lib/range";
 
 function _getEvents(): string[] {
-  const events = readLines("04");
+  const events = readLines("2018/04");
   // return events.sort().slice(0, 39);
   return events.sort();
 }

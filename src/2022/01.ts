@@ -3,7 +3,7 @@
 import { readLines } from "../lib/read";
 
 function _getNumbers(): number {
-  const numberStrings = readLines("2022-01");
+  const numberStrings = readLines("2022/01");
 
   let highest = 0;
   let current = 0;
@@ -28,7 +28,7 @@ function part1(): number {
 }
 
 function part2(): number {
-  const numberStrings = readLines("2022-01");
+  const numberStrings = readLines("2022/01");
 
   let totals = [0];
 

@@ -3,7 +3,7 @@
 import { readLines } from "../lib/read";
 
 function _getIds(): string[] {
-  return readLines("02");
+  return readLines("2018/02");
 }
 
 function part1(): number {

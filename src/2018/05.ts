@@ -3,7 +3,7 @@
 import { read } from "../lib/read";
 
 function _getPolymer(): string {
-  return read("05");
+  return read("2018/05");
 }
 
 function _match(char1: string, char2: string): boolean {

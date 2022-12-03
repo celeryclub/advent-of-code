@@ -3,7 +3,7 @@
 import { readLines } from "../lib/read";
 
 function _getNumbers(): number[] {
-  const numberStrings = readLines("01");
+  const numberStrings = readLines("2018/01");
   return numberStrings.map(number => parseInt(number));
 }
 
