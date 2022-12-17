@@ -9,11 +9,13 @@ describe("08", () => {
     const solver = new Solver(sampleInput);
 
     test("part 1", () => expect(solver.part1()).toBe(21));
+    test("part 2", () => expect(solver.part2()).toBe(8));
   });
 
   describe("full input", () => {
     const solver = new Solver(fullInput);
 
     test("part 1", () => expect(solver.part1()).toBe(1719));
+    test("part 2", () => expect(solver.part2()).toBe(590824));
   });
 });
