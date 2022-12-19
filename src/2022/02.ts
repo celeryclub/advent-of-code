@@ -34,10 +34,10 @@ const scoreMap = {
 };
 
 export class Solver {
-  private _rawInput: string[];
+  private _input: string[];
 
-  constructor(rawInput: string[]) {
-    this._rawInput = rawInput;
+  constructor(input: string[]) {
+    this._input = input;
   }
 
   private _getResult(theirPlay: Play, myPlay: Play): Result {
@@ -102,7 +102,7 @@ export class Solver {
   }
 
   public part1(): number {
-    const strategyStrings = this._rawInput;
+    const strategyStrings = this._input;
 
     const scores = strategyStrings.map(strategyString => {
       const [theirCode, myCode] = strategyString.split(" ");
@@ -117,7 +117,7 @@ export class Solver {
   }
 
   public part2(): number {
-    const strategyStrings = this._rawInput;
+    const strategyStrings = this._input;
 
     const scores = strategyStrings.map(strategyString => {
       const [theirCode, resultCode] = strategyString.split(" ");

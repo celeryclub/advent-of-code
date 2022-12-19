@@ -1,20 +1,21 @@
 // https://adventofcode.com/2022/day/1
 
 export class Solver {
-  private _rawInput: string[];
+  private _input: string[];
 
-  constructor(rawInput: string[]) {
-    this._rawInput = rawInput;
+  constructor(input: string[]) {
+    this._input = input;
   }
 
-  private _getNumbers(): number {
-    let highest = 0;
+  public part1(): number {
     let current = 0;
+    let highest = 0;
 
-    this._rawInput.forEach(numberString => {
-      const c = parseInt(numberString, 10);
-      if (!isNaN(c)) {
-        current += c;
+    this._input.forEach(numberString => {
+      const num = parseInt(numberString, 10);
+
+      if (!isNaN(num)) {
+        current += num;
       } else {
         highest = Math.max(highest, current);
         current = 0;
@@ -24,31 +25,25 @@ export class Solver {
     return highest;
   }
 
-  public part1(): number {
-    const numbers = this._getNumbers();
-
-    return numbers;
-  }
-
   public part2(): number {
     let totals = [0];
 
-    this._rawInput.forEach(numberString => {
-      const c = parseInt(numberString, 10);
+    this._input.forEach(numberString => {
+      const num = parseInt(numberString, 10);
 
-      if (!isNaN(c)) {
-        totals[totals.length - 1] += c;
+      if (!isNaN(num)) {
+        totals[totals.length - 1] += num;
       } else {
         totals.push(0);
       }
     });
 
-    const bs = totals
+    const sortedTotals = totals
       .sort(function (a, b) {
         return a - b;
       })
       .reverse();
 
-    return bs[0] + bs[1] + bs[2];
+    return sortedTotals[0] + sortedTotals[1] + sortedTotals[2];
   }
 }
