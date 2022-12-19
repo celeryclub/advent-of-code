@@ -1,12 +1,12 @@
 import { readLines } from "../lib/read";
 import { Solver } from "./04";
 
-const sampleInput = readLines("2022/04-sample");
+const exampleInput = readLines("2022/04-example");
 const fullInput = readLines("2022/04-full");
 
 describe("04", () => {
-  describe("sample input", () => {
-    const solver = new Solver(sampleInput);
+  describe("example input", () => {
+    const solver = new Solver(exampleInput);
 
     test("part 1", () => expect(solver.part1()).toBe(2));
     test("part 2", () => expect(solver.part2()).toBe(4));
