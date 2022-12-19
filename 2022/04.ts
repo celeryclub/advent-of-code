@@ -1,10 +1,10 @@
 // https://adventofcode.com/2022/day/4
 
 export class Solver {
-  private _rawInput: string[];
+  private _input: string[];
 
-  constructor(rawInput: string[]) {
-    this._rawInput = rawInput;
+  constructor(input: string[]) {
+    this._input = input;
   }
 
   private _getRanges(line: string): [number, number, number, number] {
@@ -15,7 +15,7 @@ export class Solver {
   public part1(): number {
     let containedRangeCount = 0;
 
-    this._rawInput.forEach(line => {
+    this._input.forEach(line => {
       const [range1Start, range1End, range2Start, range2End] = this._getRanges(line);
 
       if (
@@ -32,7 +32,7 @@ export class Solver {
   public part2(): number {
     let overlappingRangeCount = 0;
 
-    this._rawInput.forEach(line => {
+    this._input.forEach(line => {
       const [range1Start, range1End, range2Start, range2End] = this._getRanges(line);
 
       if (
