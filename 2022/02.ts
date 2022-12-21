@@ -33,102 +33,95 @@ const scoreMap = {
   Scissors: 3,
 };
 
-export class Solver {
-  private _input: string[];
-
-  constructor(input: string[]) {
-    this._input = input;
+function getResult(theirPlay: Play, myPlay: Play): Result {
+  if (theirPlay === myPlay) {
+    return Result.Draw;
   }
 
-  private _getResult(theirPlay: Play, myPlay: Play): Result {
-    if (theirPlay === myPlay) {
-      return Result.Draw;
-    }
-
-    if (
-      (myPlay === Play.Rock && theirPlay === Play.Scissors) ||
-      (myPlay === Play.Paper && theirPlay === Play.Rock) ||
-      (myPlay === Play.Scissors && theirPlay === Play.Paper)
-    ) {
-      return Result.Win;
-    }
-
-    return Result.Lose;
+  if (
+    (myPlay === Play.Rock && theirPlay === Play.Scissors) ||
+    (myPlay === Play.Paper && theirPlay === Play.Rock) ||
+    (myPlay === Play.Scissors && theirPlay === Play.Paper)
+  ) {
+    return Result.Win;
   }
 
-  private _getMyPlay(theirPlay: Play, result: Result): Play {
-    if (result === Result.Draw) {
-      return theirPlay;
-    }
+  return Result.Lose;
+}
 
-    switch (result) {
-      case Result.Win:
-        if (theirPlay === Play.Rock) {
-          return Play.Paper;
-        }
-        if (theirPlay === Play.Paper) {
-          return Play.Scissors;
-        }
-        if (theirPlay === Play.Scissors) {
-          return Play.Rock;
-        }
-      case Result.Lose:
-        if (theirPlay === Play.Rock) {
-          return Play.Scissors;
-        }
-        if (theirPlay === Play.Paper) {
-          return Play.Rock;
-        }
-        if (theirPlay === Play.Scissors) {
-          return Play.Paper;
-        }
-    }
+function getMyPlay(theirPlay: Play, result: Result): Play {
+  if (result === Result.Draw) {
+    return theirPlay;
   }
 
-  private _getScore(theirPlay: Play, myPlay: Play): number {
-    let score = scoreMap[myPlay];
+  switch (result) {
+    case Result.Win:
+      if (theirPlay === Play.Rock) {
+        return Play.Paper;
+      }
+      if (theirPlay === Play.Paper) {
+        return Play.Scissors;
+      }
+      if (theirPlay === Play.Scissors) {
+        return Play.Rock;
+      }
+      break;
+    case Result.Lose:
+      if (theirPlay === Play.Rock) {
+        return Play.Scissors;
+      }
+      if (theirPlay === Play.Paper) {
+        return Play.Rock;
+      }
+      if (theirPlay === Play.Scissors) {
+        return Play.Paper;
+      }
+  }
+}
 
-    const result = this._getResult(theirPlay, myPlay);
+function getScore(theirPlay: Play, myPlay: Play): number {
+  let score = scoreMap[myPlay];
 
-    switch (result) {
-      case Result.Win:
-        score += 6;
-        break;
-      case Result.Draw:
-        score += 3;
-    }
+  const result = getResult(theirPlay, myPlay);
 
-    return score;
+  switch (result) {
+    case Result.Win:
+      score += 6;
+      break;
+    case Result.Draw:
+      score += 3;
   }
 
-  public part1(): number {
-    const strategyStrings = this._input;
+  return score;
+}
 
-    const scores = strategyStrings.map(strategyString => {
-      const [theirCode, myCode] = strategyString.split(" ");
+export function part1(input: string[]): number {
+  const strategyStrings = input;
 
-      const theirPlay = playMap[theirCode];
-      const myPlay = playMap[myCode];
+  const scores = strategyStrings.map(strategyString => {
+    const [theirCode, myCode] = strategyString.split(" ");
 
-      return this._getScore(theirPlay, myPlay);
-    });
+    const theirPlay = playMap[theirCode];
+    const myPlay = playMap[myCode];
 
-    return scores.reduce((a, b) => a + b);
-  }
+    return getScore(theirPlay, myPlay);
+  });
 
-  public part2(): number {
-    const strategyStrings = this._input;
+  return scores.reduce((a, b) => a + b);
+}
 
-    const scores = strategyStrings.map(strategyString => {
-      const [theirCode, resultCode] = strategyString.split(" ");
+export function part2(input: string[]): number {
+  const strategyStrings = input;
 
-      const theirPlay = playMap[theirCode];
-      const result = resultMap[resultCode];
-      const myPlay = this._getMyPlay(theirPlay, result);
+  const scores = strategyStrings.map(strategyString => {
+    const [theirCode, resultCode] = strategyString.split(" ");
 
-      return this._getScore(theirPlay, myPlay);
-    });
+    const theirPlay = playMap[theirCode];
+    const result = resultMap[resultCode];
+    const myPlay = getMyPlay(theirPlay, result);
 
-    return scores.reduce((a, b) => a + b);
-  }
+    return getScore(theirPlay, myPlay);
+  });
+
+  return scores.reduce((a, b) => a + b);
 }

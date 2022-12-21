@@ -1,48 +1,40 @@
 // https://adventofcode.com/2022/day/4
 
-export class Solver {
-  private _input: string[];
+function getRanges(line: string): [number, number, number, number] {
+  const [_, a, b, c, d] = line.match(/(\d+)-(\d+),(\d+)-(\d+)/)!;
+  return [parseInt(a, 10), parseInt(b, 10), parseInt(c, 10), parseInt(d, 10)];
+}
 
-  constructor(input: string[]) {
-    this._input = input;
-  }
+export function part1(input: string[]): number {
+  let containedRangeCount = 0;
 
-  private _getRanges(line: string): [number, number, number, number] {
-    const [_, a, b, c, d] = line.match(/(\d+)-(\d+),(\d+)-(\d+)/);
-    return [parseInt(a, 10), parseInt(b, 10), parseInt(c, 10), parseInt(d, 10)];
-  }
+  input.forEach(line => {
+    const [range1Start, range1End, range2Start, range2End] = getRanges(line);
 
-  public part1(): number {
-    let containedRangeCount = 0;
+    if (
+      (range1Start <= range2Start && range1End >= range2End) ||
+      (range2Start <= range1Start && range2End >= range1End)
+    ) {
+      containedRangeCount++;
+    }
+  });
 
-    this._input.forEach(line => {
-      const [range1Start, range1End, range2Start, range2End] = this._getRanges(line);
+  return containedRangeCount;
+}
 
-      if (
-        (range1Start <= range2Start && range1End >= range2End) ||
-        (range2Start <= range1Start && range2End >= range1End)
-      ) {
-        containedRangeCount++;
-      }
-    });
+export function part2(input: string[]): number {
+  let overlappingRangeCount = 0;
 
-    return containedRangeCount;
-  }
+  input.forEach(line => {
+    const [range1Start, range1End, range2Start, range2End] = getRanges(line);
 
-  public part2(): number {
-    let overlappingRangeCount = 0;
+    if (
+      (range1Start <= range2Start && range1End >= range2Start) ||
+      (range2Start <= range1Start && range2End >= range1Start)
+    ) {
+      overlappingRangeCount++;
+    }
+  });
 
-    this._input.forEach(line => {
-      const [range1Start, range1End, range2Start, range2End] = this._getRanges(line);
-
-      if (
-        (range1Start <= range2Start && range1End >= range2Start) ||
-        (range2Start <= range1Start && range2End >= range1Start)
-      ) {
-        overlappingRangeCount++;
-      }
-    });
-
-    return overlappingRangeCount;
-  }
+  return overlappingRangeCount;
 }

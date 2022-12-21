@@ -5,103 +5,97 @@ interface Knot {
   y: number;
 }
 
-export class Solver {
-  private _input: string[];
-  private _rope: Knot[];
-  private _tailPositionSet: Set<string>;
+function createRope(length: number): Knot[] {
+  const rope: Knot[] = [];
 
-  constructor(input: string[]) {
-    this._input = input;
+  for (let i = 0; i < length; i++) {
+    rope.push({ x: 0, y: 0 });
   }
 
-  private _createRope(length: number): void {
-    this._rope = [];
+  return rope;
+}
 
-    for (let i = 0; i < length; i++) {
-      this._rope.push({ x: 0, y: 0 });
-    }
+function moveHead(rope: Knot[], direction: string): void {
+  const head = rope[0];
+
+  switch (direction) {
+    case "U":
+      head.y -= 1;
+      break;
+    case "R":
+      head.x += 1;
+      break;
+    case "D":
+      head.y += 1;
+      break;
+    case "L":
+      head.x -= 1;
+      break;
   }
+}
 
-  private _moveHead(direction: string): void {
-    const head = this._rope[0];
+function move(rope: Knot[], tailPositionSet: Set<string>, direction: string, distance: number): void {
+  for (let i = 0; i < distance; i++) {
+    // Move head knot one position
+    moveHead(rope, direction);
 
-    switch (direction) {
-      case "U":
-        head.y -= 1;
-        break;
-      case "R":
-        head.x += 1;
-        break;
-      case "D":
-        head.y += 1;
-        break;
-      case "L":
-        head.x -= 1;
-        break;
-    }
-  }
+    // Move each subsequent knot if needed
+    for (let j = 1; j < rope.length; j++) {
+      const current = rope[j];
+      const previous = rope[j - 1];
 
-  private _move(direction: string, distance: number): void {
-    for (let i = 0; i < distance; i++) {
-      // Move head knot one position
-      this._moveHead(direction);
+      const horizontalDistance = previous.x - current.x;
+      const verticalDistance = previous.y - current.y;
 
-      // Move each subsequent knot if needed
-      for (let j = 1; j < this._rope.length; j++) {
-        const current = this._rope[j];
-        const previous = this._rope[j - 1];
+      if (
+        Math.abs(horizontalDistance) >= 1 &&
+        Math.abs(verticalDistance) >= 1 &&
+        (Math.abs(horizontalDistance) > 1 || Math.abs(verticalDistance) > 1)
+      ) {
+        // Move diagonally
+        current.x += Math.sign(horizontalDistance);
+        current.y += Math.sign(verticalDistance);
+      } else if (Math.abs(horizontalDistance) > 1) {
+        // Move horizontally
+        current.x += Math.sign(horizontalDistance);
+      } else if (Math.abs(verticalDistance) > 1) {
+        // Move vertially
+        current.y += Math.sign(verticalDistance);
+      }
 
-        const horizontalDistance = previous.x - current.x;
-        const verticalDistance = previous.y - current.y;
-
-        if (
-          Math.abs(horizontalDistance) >= 1 &&
-          Math.abs(verticalDistance) >= 1 &&
-          (Math.abs(horizontalDistance) > 1 || Math.abs(verticalDistance) > 1)
-        ) {
-          // Move diagonally
-          current.x += Math.sign(horizontalDistance);
-          current.y += Math.sign(verticalDistance);
-        } else if (Math.abs(horizontalDistance) > 1) {
-          // Move horizontally
-          current.x += Math.sign(horizontalDistance);
-        } else if (Math.abs(verticalDistance) > 1) {
-          // Move vertially
-          current.y += Math.sign(verticalDistance);
-        }
-
-        // This is the tail (the very last knot of the rope)
-        if (j === this._rope.length - 1) {
-          const { x, y } = current;
-          this._tailPositionSet.add(`${x},${y}`);
-        }
+      // This is the tail (the very last knot of the rope)
+      if (j === rope.length - 1) {
+        const { x, y } = current;
+        tailPositionSet.add(`${x},${y}`);
       }
     }
   }
+}
 
-  private _executeMovements(): void {
-    this._tailPositionSet = new Set<string>();
+function executeMovements(rope: Knot[], input: string[]): Set<string> {
+  const tailPositionSet = new Set<string>();
 
-    this._input.forEach(line => {
-      const match = line.match(/(\w) (\d+)/);
-      const direction = match[1];
-      const distance = parseInt(match[2]);
+  input.forEach(line => {
+    const match = line.match(/(\w) (\d+)/)!;
+    const direction = match[1];
+    const distance = parseInt(match[2]);
 
-      this._move(direction, distance);
-    });
-  }
+    move(rope, tailPositionSet, direction, distance);
+  });
 
-  public part1(): number {
-    this._createRope(2);
-    this._executeMovements();
+  return tailPositionSet;
+}
 
-    return this._tailPositionSet.size;
-  }
+export function part1(input: string[]): number {
+  const rope = createRope(2);
+  const tailPositionSet = executeMovements(rope, input);
 
-  public part2(): number {
-    this._createRope(10);
-    this._executeMovements();
+  return tailPositionSet.size;
+}
 
-    return this._tailPositionSet.size;
-  }
+export function part2(input: string[]): number {
+  const rope = createRope(10);
+  const tailPositionSet = executeMovements(rope, input);
+
+  return tailPositionSet.size;
 }

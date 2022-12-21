@@ -1,16 +1,14 @@
 import { readLines } from "../lib/read";
-import { Solver } from "./10";
+import { part1, part2 } from "./10";
 
 const exampleInput = readLines("2022/10-example");
 const fullInput = readLines("2022/10-full");
 
 describe("10", () => {
   describe("example input", () => {
-    const solver = new Solver(exampleInput);
-
-    test("part 1", () => expect(solver.part1()).toBe(13140));
+    test("part 1", () => expect(part1(exampleInput)).toBe(13140));
     test("part 2", () =>
-      expect(solver.part2()).toBe(
+      expect(part2(exampleInput)).toBe(
         `
 ##..##..##..##..##..##..##..##..##..##..
 ###...###...###...###...###...###...###.
@@ -22,11 +20,9 @@ describe("10", () => {
   });
 
   describe("full input", () => {
-    const solver = new Solver(fullInput);
-
-    test("part 1", () => expect(solver.part1()).toBe(11820));
+    test("part 1", () => expect(part1(fullInput)).toBe(11820));
     test("part 2", () =>
-      expect(solver.part2()).toBe(
+      expect(part2(fullInput)).toBe(
         `
 ####.###....##.###..###..#..#..##..#..#.
 #....#..#....#.#..#.#..#.#.#..#..#.#..#.

@@ -33,7 +33,7 @@ class Monkey {
     this.ifFalse = ifFalse;
   }
 
-  public inspectItems(throwTo: (i: number, item: number) => void) {
+  public inspectItems(monkeys: Monkey[], throwTo: (monkey: Monkey, item: number) => void) {
     this.inspectionCount += this.items.length;
 
     this.items.forEach(item => {
@@ -44,9 +44,9 @@ class Monkey {
 
       // Decide which monkey to throw the item to
       if (itemValue % this.test === 0) {
-        throwTo(this.ifTrue, itemValue);
+        throwTo(monkeys[this.ifTrue], itemValue);
       } else {
-        throwTo(this.ifFalse, itemValue);
+        throwTo(monkeys[this.ifFalse], itemValue);
       }
     });
 
@@ -54,68 +54,61 @@ class Monkey {
   }
 }
 
-export class Solver {
-  private _input: string[][];
-  private _monkeys: Monkey[];
+function createMonkeys(input: string[]): Monkey[] {
+  const monkeys: Monkey[] = [];
 
-  constructor(input: string[]) {
-    this._input = [];
+  // Group lines by empty lines
+  const groupedInput = input.reduce(
+    (groups, line) => {
+      line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
+      return groups;
+    },
+    [[]]
+  );
 
-    // Group lines by empty lines
-    this._input = input.reduce(
-      (groups, line) => {
-        line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
-        return groups;
-      },
-      [[]]
-    );
-  }
+  groupedInput.forEach(lines => {
+    const itemsMatch = lines[1].match(/(\d+),?/g);
+    const items = itemsMatch.map(item => parseInt(item, 10));
 
-  private _createMonkeys(): void {
-    this._monkeys = [];
+    const operationMatch = lines[2].match(/(\+|\*) (.+)/);
+    const [_, operator, opValue] = operationMatch;
 
-    this._input.forEach(lines => {
-      const itemsMatch = lines[1].match(/(\d+),?/g);
-      const items = itemsMatch.map(item => parseInt(item, 10));
+    const testMatch = lines[3].match(/(\d+)$/);
+    const test = parseInt(testMatch[1], 10);
 
-      const operationMatch = lines[2].match(/(\+|\*) (.+)/);
-      const [_, operator, opValue] = operationMatch;
+    const ifTrueMatch = lines[4].match(/(\d+)$/);
+    const ifTrue = parseInt(ifTrueMatch[1], 10);
 
-      const testMatch = lines[3].match(/(\d+)$/);
-      const test = parseInt(testMatch[1], 10);
+    const ifFalseMatch = lines[5].match(/(\d+)$/);
+    const ifFalse = parseInt(ifFalseMatch[1], 10);
 
-      const ifTrueMatch = lines[4].match(/(\d+)$/);
-      const ifTrue = parseInt(ifTrueMatch[1], 10);
+    monkeys.push(new Monkey(items, operator, opValue, test, ifTrue, ifFalse));
+  });
 
-      const ifFalseMatch = lines[5].match(/(\d+)$/);
-      const ifFalse = parseInt(ifFalseMatch[1], 10);
+  return monkeys;
+}
 
-      this._monkeys.push(new Monkey(items, operator, opValue, test, ifTrue, ifFalse));
+function throwTo(monkey: Monkey, item: number): void {
+  monkey.items.push(item);
+}
+
+export function part1(input: string[]): number {
+  const monkeys = createMonkeys(input);
+
+  const roundCount = 20;
+
+  // Run game for 20 rounds
+  for (let i = 0; i < roundCount; i++) {
+    // During each round, give each monkey a turn
+    monkeys.forEach(monkey => {
+      monkey.inspectItems(monkeys, throwTo);
     });
   }
 
-  private _throwTo(i: number, item: number): void {
-    this._monkeys[i].items.push(item);
-  }
+  const inspectionCounts = monkeys
+    .map(monkey => monkey.inspectionCount)
+    .sort((a, b) => a - b)
+    .reverse();
 
-  public part1(): number {
-    this._createMonkeys();
-
-    const roundCount = 20;
-
-    // Run game for 20 rounds
-    for (let i = 0; i < roundCount; i++) {
-      // During each round, give each monkey a turn
-      this._monkeys.forEach(monkey => {
-        monkey.inspectItems(this._throwTo.bind(this));
-      });
-    }
-
-    const inspectionCounts = this._monkeys
-      .map(monkey => monkey.inspectionCount)
-      .sort((a, b) => a - b)
-      .reverse();
-
-    return inspectionCounts[0] * inspectionCounts[1];
-  }
+  return inspectionCounts[0] * inspectionCounts[1];
 }

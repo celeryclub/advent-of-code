@@ -1,101 +1,94 @@
 // https://adventofcode.com/2022/day/10
 
-export class Solver {
-  private _input: string[];
-  private _commands: number[];
+function buildCommands(input: string[]): number[] {
+  const commands: number[] = [];
 
-  constructor(input: string[]) {
-    this._input = input;
-  }
+  input.forEach(line => {
+    const addMatch = line.match(/^addx (-?\d+)/);
 
-  private _buildCommands(): void {
-    this._commands = [];
+    if (addMatch) {
+      const value = parseInt(addMatch[1]);
+      commands.push(0);
+      commands.push(value);
+    } else {
+      commands.push(0);
+    }
+  });
 
-    this._input.forEach(line => {
-      const addMatch = line.match(/^addx (-?\d+)/);
+  return commands;
+}
 
-      if (addMatch) {
-        const value = parseInt(addMatch[1]);
-        this._commands.push(0);
-        this._commands.push(value);
+function renderPixelMatrix(pixelMatrix: boolean[][]): string {
+  const crt_width = 40;
+  const crt_height = 6;
+
+  const lines: string[] = [];
+
+  for (let i = 0; i < crt_height; i++) {
+    lines[i] = "";
+
+    for (let j = 0; j < crt_width; j++) {
+      if (pixelMatrix[i]?.[j] === true) {
+        lines[i] += "#";
       } else {
-        this._commands.push(0);
-      }
-    });
-  }
-
-  private _renderPixelMatrix(pixelMatrix: boolean[][]): string {
-    const crt_width = 40;
-    const crt_height = 6;
-
-    let lines = [];
-
-    for (let i = 0; i < crt_height; i++) {
-      lines[i] = "";
-
-      for (let j = 0; j < crt_width; j++) {
-        if (pixelMatrix[i]?.[j] === true) {
-          lines[i] += "#";
-        } else {
-          lines[i] += ".";
-        }
+        lines[i] += ".";
       }
     }
-
-    return lines.join("\n");
   }
 
-  public part1(): number {
-    this._buildCommands();
+  return lines.join("\n");
+}
 
-    let cycle = 0;
-    let x = 1;
+export function part1(input: string[]): number {
+  const commands = buildCommands(input);
 
-    let signalStrengthSum = 0;
+  let cycle = 0;
+  let x = 1;
 
-    this._commands.forEach(command => {
-      cycle++;
+  let signalStrengthSum = 0;
 
-      if ((cycle - 20) % 40 === 0) {
-        signalStrengthSum += cycle * x;
-      }
+  commands.forEach(command => {
+    cycle++;
 
-      x += command;
-    });
+    if ((cycle - 20) % 40 === 0) {
+      signalStrengthSum += cycle * x;
+    }
 
-    return signalStrengthSum;
-  }
+    x += command;
+  });
 
-  public part2(): string {
-    this._buildCommands();
+  return signalStrengthSum;
+}
 
-    let cycle = 0;
-    let x = 1;
+export function part2(input: string[]): string {
+  const commands = buildCommands(input);
 
-    let pixelMatrix: boolean[][] = [];
-    let i = 0;
-    let j = 0;
+  let cycle = 0;
+  let x = 1;
 
-    this._commands.forEach(command => {
-      cycle++;
+  const pixelMatrix: boolean[][] = [];
+  let i = 0;
+  let j = 0;
 
-      if (Math.abs(x - j) <= 1) {
-        pixelMatrix[i] ||= [];
-        pixelMatrix[i][j] = true;
-      }
+  commands.forEach(command => {
+    cycle++;
 
-      if (cycle % 40 === 0) {
-        // Start a new row
-        j = 0;
-        i++;
-      } else {
-        // Move forward within the current row
-        j++;
-      }
+    if (Math.abs(x - j) <= 1) {
+      pixelMatrix[i] ||= [];
+      pixelMatrix[i][j] = true;
+    }
 
-      x += command;
-    });
+    if (cycle % 40 === 0) {
+      // Start a new row
+      j = 0;
+      i++;
+    } else {
+      // Move forward within the current row
+      j++;
+    }
 
-    return this._renderPixelMatrix(pixelMatrix);
-  }
+    x += command;
+  });
+
+  return renderPixelMatrix(pixelMatrix);
 }
