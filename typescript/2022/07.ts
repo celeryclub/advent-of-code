@@ -1,5 +1,7 @@
 // https://adventofcode.com/2022/day/7
 
+// export const title = "Day 7: No Space Left On Device";
+
 // After examining the input programmatically, I've determined
 // that each unique directory is only listed once using `ls`.
 // Therefore, we don't need to store file information at all.
