@@ -86,7 +86,7 @@ fn part2(input: &str) -> u32 {
 }
 
 fn main() {
-    let input = include_str!("../../input/04.txt").trim_end();
+    let input = include_str!("../../../../_input/2016/04.txt").trim_end();
 
     println!("part 1: {}", part1(input));
     println!("part 2: {}", part2(input));

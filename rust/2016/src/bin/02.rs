@@ -107,7 +107,7 @@ fn part2(input: &str) -> String {
 }
 
 fn main() {
-    let input = include_str!("../../input/02.txt").trim_end();
+    let input = include_str!("../../../../_input/2016/02.txt").trim_end();
 
     println!("part 1: {}", part1(input));
     println!("part 2: {}", part2(input));

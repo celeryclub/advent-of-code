@@ -95,7 +95,7 @@ fn part2(input: &str) -> String {
 }
 
 fn main() {
-    let input = include_str!("../../input/08.txt").trim_end();
+    let input = include_str!("../../../../_input/2016/08.txt").trim_end();
 
     println!("part 1: {}", part1(input));
     println!("part 2:\n{}", part2(input));
@@ -103,7 +103,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    const INPUT: &str = include_str!("../../input/08.txt");
+    const INPUT: &str = include_str!("../../../../_input/2016/08.txt");
 
     #[test]
     fn part1() {

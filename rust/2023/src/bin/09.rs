@@ -70,7 +70,7 @@ fn part2(input: &str) -> i32 {
 }
 
 fn main() {
-    let input = include_str!("../../input/09.txt").trim_end();
+    let input = include_str!("../../../../_input/2023/09.txt").trim_end();
 
     println!("part 1: {}", part1(input));
     println!("part 2: {}", part2(input));
@@ -78,7 +78,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    const INPUT: &str = include_str!("../../input/09.txt");
+    const INPUT: &str = include_str!("../../../../_input/2023/09.txt");
 
     #[test]
     fn part1() {

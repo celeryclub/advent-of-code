@@ -54,14 +54,14 @@ fn part1(input: &str) -> u64 {
 }
 
 fn main() {
-    let input = include_str!("../../input/21.txt").trim_end();
+    let input = include_str!("../../../../_input/2022/21.txt").trim_end();
 
     println!("part 1: {}", part1(input));
 }
 
 #[cfg(test)]
 mod tests {
-    const INPUT: &str = include_str!("../../input/21.txt");
+    const INPUT: &str = include_str!("../../../../_input/2022/21.txt");
 
     #[test]
     fn part1() {
