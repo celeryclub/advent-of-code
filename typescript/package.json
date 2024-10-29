@@ -1,12 +1,14 @@
 {
-  "name": "adventofcode",
+  "name": "advent-of-code",
   "version": "1.0.0",
   "description": "Solving puzzles from adventofcode.com",
+  "private": true,
   "author": "Steve Davis <steve@celery.club>",
   "license": "MIT",
   "_type": "module",
   "engines": {
-    "node": "^18"
+    "node": "^22",
+    "npm": "^10"
   },
   "scripts": {
     "__start": "node -r ts-node/esm ./src/run",
