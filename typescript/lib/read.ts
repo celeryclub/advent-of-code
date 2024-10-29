@@ -7,7 +7,7 @@ import path from "path";
 // const __dirname = path.dirname(__filename);
 
 export function read(inputPath: string): string {
-  const filePath = path.join(__dirname, `../input/${inputPath}.txt`);
+  const filePath = path.join(__dirname, `../../_input/${inputPath}.txt`);
   return fs.readFileSync(filePath, "utf8").trimEnd();
 }
 
