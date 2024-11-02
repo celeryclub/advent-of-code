@@ -1,5 +1,0 @@
-{
-  "tasks": {
-    "dayz": "YEAR=2022 deno run --allow-env --allow-read=. ./src/run.ts"
-  }
-}

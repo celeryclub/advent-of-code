@@ -11,15 +11,9 @@
     "npm": "^10"
   },
   "scripts": {
-    "__start": "node -r ts-node/esm ./src/run",
-    "___start": "node -r ts-node/register ./src/run",
-    "_start": "node ./src/run.mjs",
     "2015": "YEAR=2015 jest --runInBand",
     "2018": "YEAR=2018 jest --runInBand",
     "2022": "YEAR=2022 jest --runInBand",
-    "deno": "YEAR=2022 deno run --allow-env --allow-read=. ./src/run.ts",
-    "__2022": "YEAR=2022 ts-node --esm ./src/run.ts",
-    "_all": "jest",
     "tsc": "tsc --noEmit",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
@@ -33,7 +27,6 @@
     "@types/jest": "^29.2.4",
     "@types/node": "^22.8.6",
     "prettier": "^2.8.1",
-    "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   }
 }
