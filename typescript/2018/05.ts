@@ -1,11 +1,5 @@
 // https://adventofcode.com/2018/day/5
 
-import { read } from "../lib/read";
-
-function _getPolymer(): string {
-  return read("2018/05");
-}
-
 function _match(char1: string, char2: string): boolean {
   return char1 !== char2 && char1.toLowerCase() === char2.toLowerCase();
 }
@@ -60,19 +54,16 @@ function _reactedLength(polymer: string): number {
   return polymer.length - reactionCount * 2;
 }
 
-function part1(): number {
-  const polymer = _getPolymer();
-
-  return _reactedLength(polymer);
+function part1(input: string): number {
+  return _reactedLength(input);
 }
 
-function part2(): number {
-  const polymer = _getPolymer();
+function part2(input: string): number {
   let shortestPolymerLength;
 
   for (let index = 65; index <= 90; index++) {
     const characterToRemove = String.fromCharCode(index);
-    const shorterPolymer = polymer.replace(new RegExp(characterToRemove, "ig"), "");
+    const shorterPolymer = input.replace(new RegExp(characterToRemove, "ig"), "");
     const reactedLength = _reactedLength(shorterPolymer);
 
     if (!shortestPolymerLength || reactedLength < shortestPolymerLength) {
@@ -83,12 +74,14 @@ function part2(): number {
   return shortestPolymerLength;
 }
 
-describe("05", () => {
-  test("part 1", () => {
-    expect(part1()).toBe(9526);
-  });
+const input = (await Bun.file("../_input/2018/05.txt").text()).trimEnd();
 
-  test("part 2", () => {
-    expect(part2()).toBe(6694);
-  });
-});
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(9526));
+  test("part 2", () => expect(part2(input)).toBe(6694));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
+}

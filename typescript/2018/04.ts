@@ -1,17 +1,10 @@
 // https://adventofcode.com/2018/day/4
 
-import { readLines } from "../lib/read";
 import range from "../lib/range";
 
-function _getEvents(): string[] {
-  const events = readLines("2018/04");
-  // return events.sort().slice(0, 39);
-  return events.sort();
-}
-
-// function part1(): number {
-function part1() {
-  const events = _getEvents();
+// function part1(input: string): number {
+function part1(input: string) {
+  const events = input.split("\n").sort();
 
   // console.log(events);
 
@@ -142,13 +135,12 @@ function part1() {
   return parseInt(sleepiestGuardId.slice(1)) * mostFrequentMinute;
 }
 
-// 6617 is too low
+const input = (await Bun.file("../_input/2018/04.txt").text()).trimEnd();
 
-// console.log(`part 1: ${part1()}`);
-// console.log(`part 2: ${part2()}`);
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
 
-describe.skip("04", () => {
-  test("part 1", () => {
-    expect(part1()).toBe(0);
-  });
-});
+  test.skip("part 1", () => expect(part1(input)).toBe(0));
+} else {
+  console.log("part 1:", part1(input));
+}

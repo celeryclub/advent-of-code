@@ -1,13 +1,7 @@
 // https://adventofcode.com/2018/day/2
 
-import { readLines } from "../lib/read";
-
-function _getIds(): string[] {
-  return readLines("2018/02");
-}
-
-function part1(): number {
-  const ids = _getIds();
+function part1(input: string): number {
+  const ids = input.split("\n");
 
   let doubles = 0;
   let triples = 0;
@@ -39,8 +33,8 @@ function part1(): number {
   return doubles * triples;
 }
 
-function part2(): string {
-  const ids = _getIds();
+function part2(input: string): string {
+  const ids = input.split("\n");
 
   for (let index = 0; index < ids.length; index++) {
     for (let index2 = 0; index2 < ids.length; index2++) {
@@ -63,12 +57,14 @@ function part2(): string {
   }
 }
 
-describe("02", () => {
-  test("part 1", () => {
-    expect(part1()).toBe(7808);
-  });
+const input = (await Bun.file("../_input/2018/02.txt").text()).trimEnd();
 
-  test("part 2", () => {
-    expect(part2()).toBe("efmyhuckqldtwjyvisipargno");
-  });
-});
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(7808));
+  test("part 2", () => expect(part2(input)).toBe("efmyhuckqldtwjyvisipargno"));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
+}

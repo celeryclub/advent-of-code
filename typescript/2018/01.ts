@@ -1,14 +1,7 @@
 // https://adventofcode.com/2018/day/1
 
-import { readLines } from "../lib/read";
-
-function _getNumbers(): number[] {
-  const numberStrings = readLines("2018/01");
-  return numberStrings.map(number => parseInt(number));
-}
-
-function part1(): number {
-  const numbers = _getNumbers();
+function part1(input: string): number {
+  const numbers = input.split("\n").map((number) => parseInt(number));
 
   const total = numbers.reduce((accumulator, number) => {
     return accumulator + number;
@@ -17,8 +10,8 @@ function part1(): number {
   return total;
 }
 
-function part2(): number {
-  const numbers = _getNumbers();
+function part2(input: string): number {
+  const numbers = input.split("\n").map((number) => parseInt(number));
 
   let frequency = 0;
   let index = 0;
@@ -41,12 +34,14 @@ function part2(): number {
   }
 }
 
-describe("01", () => {
-  test("part 1", () => {
-    expect(part1()).toBe(590);
-  });
+const input = (await Bun.file("../_input/2018/01.txt").text()).trimEnd();
 
-  test("part 2", () => {
-    expect(part2()).toBe(83445);
-  });
-});
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(590));
+  test("part 2", () => expect(part2(input)).toBe(83445));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
+}
