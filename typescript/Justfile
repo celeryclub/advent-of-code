@@ -1,0 +1,8 @@
+default:
+	@just --list
+
+run year day:
+	@bun "./{{year}}/{{day}}.ts"
+
+test year day="all":
+	@bun test ./{{year}}/{{ if day != "all" { (day + ".ts") } else { "*" } }}
