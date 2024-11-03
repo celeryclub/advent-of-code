@@ -95,8 +95,8 @@ function getScore(theirPlay: Play, myPlay: Play): number {
   return score;
 }
 
-export function part1(input: string[]): number {
-  const strategyStrings = input;
+export function part1(input: string): number {
+  const strategyStrings = input.split("\n");
 
   const scores = strategyStrings.map(strategyString => {
     const [theirCode, myCode] = strategyString.split(" ");
@@ -110,8 +110,8 @@ export function part1(input: string[]): number {
   return scores.reduce((a, b) => a + b);
 }
 
-export function part2(input: string[]): number {
-  const strategyStrings = input;
+export function part2(input: string): number {
+  const strategyStrings = input.split("\n");
 
   const scores = strategyStrings.map(strategyString => {
     const [theirCode, resultCode] = strategyString.split(" ");
@@ -124,4 +124,16 @@ export function part2(input: string[]): number {
   });
 
   return scores.reduce((a, b) => a + b);
+}
+
+const input = (await Bun.file("../_input/2022/02.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(10816));
+  test("part 2", () => expect(part2(input)).toBe(11657));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

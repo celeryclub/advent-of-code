@@ -1,10 +1,10 @@
 // https://adventofcode.com/2022/day/8
 
-function parseInput(input: string[]): number[][] {
-  return input.map(line => line.split("").map(char => parseInt(char, 10)));
+function parseInput(input: string): number[][] {
+  return input.split("\n").map(line => line.split("").map(char => parseInt(char, 10)));
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const trees = parseInput(input);
 
   // All edge trees are visible
@@ -56,7 +56,7 @@ export function part1(input: string[]): number {
   return edgeTreeCount + interiorVisibilityMatrix.flat().length;
 }
 
-export function part2(input: string[]): number {
+export function part2(input: string): number {
   const trees = parseInput(input);
 
   const scenicScoreMatrix: number[][] = [];
@@ -104,3 +104,16 @@ export function part2(input: string[]): number {
 
   return Math.max(...scenicScoreMatrix.flat());
 }
+
+const input = (await Bun.file("../_input/2022/08.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(1719));
+  test("part 2", () => expect(part2(input)).toBe(590824));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
+}
+

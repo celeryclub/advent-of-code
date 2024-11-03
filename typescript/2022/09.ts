@@ -72,10 +72,10 @@ function move(rope: Knot[], tailPositionSet: Set<string>, direction: string, dis
   }
 }
 
-function executeMovements(rope: Knot[], input: string[]): Set<string> {
+function executeMovements(rope: Knot[], input: string): Set<string> {
   const tailPositionSet = new Set<string>();
 
-  input.forEach(line => {
+  input.split("\n").forEach(line => {
     const match = line.match(/(\w) (\d+)/)!;
     const direction = match[1];
     const distance = parseInt(match[2]);
@@ -86,16 +86,28 @@ function executeMovements(rope: Knot[], input: string[]): Set<string> {
   return tailPositionSet;
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const rope = createRope(2);
   const tailPositionSet = executeMovements(rope, input);
 
   return tailPositionSet.size;
 }
 
-export function part2(input: string[]): number {
+export function part2(input: string): number {
   const rope = createRope(10);
   const tailPositionSet = executeMovements(rope, input);
 
   return tailPositionSet.size;
+}
+
+const input = (await Bun.file("../_input/2022/09.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(5981));
+  test("part 2", () => expect(part2(input)).toBe(2352));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

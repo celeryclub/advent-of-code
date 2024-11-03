@@ -1,7 +1,5 @@
 // https://adventofcode.com/2022/day/7
 
-// export const title = "Day 7: No Space Left On Device";
-
 // After examining the input programmatically, I've determined
 // that each unique directory is only listed once using `ls`.
 // Therefore, we don't need to store file information at all.
@@ -87,19 +85,31 @@ function findSmallestMatchingDir(currentDir: Directory, spaceNeeded: number): nu
   return smallestMatchingSize;
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const root = new Directory("/");
-  buildFs(root, input);
+  buildFs(root, input.split("\n"));
 
   return sumMatchingDirSizes(root);
 }
 
-export function part2(input: string[]): number {
+export function part2(input: string): number {
   const root = new Directory("/");
-  buildFs(root, input);
+  buildFs(root, input.split("\n"));
 
   const freeSpace = 70_000_000 - root.size;
   const spaceNeeded = 30_000_000 - freeSpace;
 
   return findSmallestMatchingDir(root, spaceNeeded);
+}
+
+const input = (await Bun.file("../_input/2022/07.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(1243729));
+  test("part 2", () => expect(part2(input)).toBe(4443914));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

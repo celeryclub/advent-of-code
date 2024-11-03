@@ -11,8 +11,8 @@ class Item {
   constructor(public value: number, public index: number) {}
 }
 
-function createItems(input: string[]) {
-  return input.map((line, index) => {
+function createItems(input: string) {
+  return input.split("\n").map((line, index) => {
     return new Item(parseInt(line, 10), index);
   });
 }
@@ -28,7 +28,7 @@ function wrapIndex(index: number, length: number): number {
   // return index;
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const originalList = createItems(input);
   const mixedList = [...originalList];
 
@@ -147,4 +147,14 @@ export function part1(input: string[]): number {
 
   // return highest;
   return 2;
+}
+
+const input = (await Bun.file("../_input/2022/06.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test.skip("part 1", () => expect(part1(input)).toBe(0));
+} else {
+  console.log("part 1:", part1(input));
 }

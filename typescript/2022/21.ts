@@ -2,10 +2,10 @@
 
 import { operate } from "../lib/math";
 
-function createMonkeys(input: string[]): Map<string, number | string[]> {
+function createMonkeys(input: string): Map<string, number | string[]> {
   const monkeys = new Map<string, number | string[]>();
 
-  input.forEach(line => {
+  input.split("\n").forEach(line => {
     const [_, key, value] = line.match(/(\w{4}): (.+)/)!;
 
     if (Number.isInteger(parseInt(value, 10))) {
@@ -33,8 +33,18 @@ function getValue(monkeys: Map<string, number | string[]>, key: string): number 
   return operate(operator, value1, value2);
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const monkeys = createMonkeys(input);
 
   return getValue(monkeys, "root");
+}
+
+const input = (await Bun.file("../_input/2022/21.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(121868120894282));
+} else {
+  console.log("part 1:", part1(input));
 }

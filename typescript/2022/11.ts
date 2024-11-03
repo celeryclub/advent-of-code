@@ -54,11 +54,11 @@ class Monkey {
   }
 }
 
-function createMonkeys(input: string[]): Monkey[] {
+function createMonkeys(input: string): Monkey[] {
   const monkeys: Monkey[] = [];
 
   // Group lines by empty lines
-  const groupedInput = input.reduce(
+  const groupedInput = input.split("\n").reduce(
     (groups, line) => {
       line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
       return groups;
@@ -92,7 +92,7 @@ function throwTo(monkey: Monkey, item: number): void {
   monkey.items.push(item);
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const monkeys = createMonkeys(input);
 
   const roundCount = 20;
@@ -111,4 +111,14 @@ export function part1(input: string[]): number {
     .reverse();
 
   return inspectionCounts[0] * inspectionCounts[1];
+}
+
+const input = (await Bun.file("../_input/2022/11.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(151312));
+} else {
+  console.log("part 1:", part1(input));
 }

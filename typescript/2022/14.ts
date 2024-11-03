@@ -35,11 +35,11 @@ function createRockLine(filledSpace: Set<string>, points: number[][]): number {
   return lowestLedgeIndex;
 }
 
-function createRocks(input: string[]): [Set<string>, number] {
+function createRocks(input: string): [Set<string>, number] {
   const filledSpace = new Set<string>();
   const lowestLedgeIndexes: number[] = [];
 
-  input.forEach(line => {
+  input.split("\n").forEach(line => {
     const points = line.split(" -> ").map(pointString => {
       const [x, y] = pointString.split(",");
       return [parseInt(x, 10), parseInt(y, 10)];
@@ -129,7 +129,7 @@ function dropSandWithFloor(filledSpace: Set<string>, lowestLedgeIndex: number): 
   }
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const [filledSpace, lowestLedgeIndex] = createRocks(input);
 
   let sandCount = 0;
@@ -141,7 +141,7 @@ export function part1(input: string[]): number {
   return sandCount;
 }
 
-export function part2(input: string[]): number {
+export function part2(input: string): number {
   const [filledSpace, lowestLedgeIndex] = createRocks(input);
 
   let sandCount = 0;
@@ -151,4 +151,16 @@ export function part2(input: string[]): number {
   } while (dropSandWithFloor(filledSpace, lowestLedgeIndex));
 
   return sandCount;
+}
+
+const input = (await Bun.file("../_input/2022/14.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(808));
+  test("part 2", () => expect(part2(input)).toBe(26625));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

@@ -1,10 +1,11 @@
 // https://adventofcode.com/2022/day/5
 
-function parseInput(input: string[]): [string[][], string[]] {
-  const dividerLineIndex = input.findIndex(line => line === "");
+function parseInput(input: string): [string[][], string[]] {
+  const inputSplit = input.split("\n");
+  const dividerLineIndex = inputSplit.findIndex(line => line === "");
 
-  const cratesInput = input.slice(0, dividerLineIndex);
-  const commandsInput = input.slice(dividerLineIndex + 1);
+  const cratesInput = inputSplit.slice(0, dividerLineIndex);
+  const commandsInput = inputSplit.slice(dividerLineIndex + 1);
 
   const columnLabelLine = cratesInput[cratesInput.length - 1];
 
@@ -33,7 +34,7 @@ function parseCommand(command: string) {
   return [parseInt(a, 10), parseInt(b, 10) - 1, parseInt(c, 10) - 1];
 }
 
-export function part1(input: string[]): string {
+export function part1(input: string): string {
   const [stacks, commands] = parseInput(input);
 
   // Move crates around
@@ -46,7 +47,7 @@ export function part1(input: string[]): string {
   return stacks.map(stack => stack[stack.length - 1]).join("");
 }
 
-export function part2(input: string[]): string {
+export function part2(input: string): string {
   const [stacks, commands] = parseInput(input);
 
   // Move crates around
@@ -57,4 +58,16 @@ export function part2(input: string[]): string {
   });
 
   return stacks.map(stack => stack[stack.length - 1]).join("");
+}
+
+const input = (await Bun.file("../_input/2022/05.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe("FZCMJCRHZ"));
+  test("part 2", () => expect(part2(input)).toBe("JSDHQMZGF"));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

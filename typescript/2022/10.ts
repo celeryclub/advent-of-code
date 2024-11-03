@@ -1,9 +1,9 @@
 // https://adventofcode.com/2022/day/10
 
-function buildCommands(input: string[]): number[] {
+function buildCommands(input: string): number[] {
   const commands: number[] = [];
 
-  input.forEach(line => {
+  input.split("\n").forEach(line => {
     const addMatch = line.match(/^addx (-?\d+)/);
 
     if (addMatch) {
@@ -39,7 +39,7 @@ function renderPixelMatrix(pixelMatrix: boolean[][]): string {
   return lines.join("\n");
 }
 
-export function part1(input: string[]): number {
+export function part1(input: string): number {
   const commands = buildCommands(input);
 
   let cycle = 0;
@@ -60,7 +60,7 @@ export function part1(input: string[]): number {
   return signalStrengthSum;
 }
 
-export function part2(input: string[]): string {
+export function part2(input: string): string {
   const commands = buildCommands(input);
 
   let cycle = 0;
@@ -91,4 +91,23 @@ export function part2(input: string[]): string {
   });
 
   return renderPixelMatrix(pixelMatrix);
+}
+
+const input = (await Bun.file("../_input/2022/10.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(11820));
+  test("part 2", () => expect(part2(input)).toBe(
+`####.###....##.###..###..#..#..##..#..#.
+#....#..#....#.#..#.#..#.#.#..#..#.#..#.
+###..#..#....#.###..#..#.##...#..#.####.
+#....###.....#.#..#.###..#.#..####.#..#.
+#....#....#..#.#..#.#.#..#.#..#..#.#..#.
+####.#.....##..###..#..#.#..#.#..#.#..#.`
+));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }

@@ -29,8 +29,8 @@ function compareArrays(left: any[], right: any[]): number {
   return left.length < right.length ? -1 : 0;
 }
 
-export function part1(input: string[]): number {
-  const packetGroups = input.reduce(
+export function part1(input: string): number {
+  const packetGroups = input.split("\n").reduce(
     (groups, line) => {
       line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
       return groups;
@@ -54,11 +54,11 @@ export function part1(input: string[]): number {
   return sortedPairIndexSum;
 }
 
-export function part2(input: string[]): number {
+export function part2(input: string): number {
   const divider1 = [[2]];
   const divider2 = [[6]];
 
-  const packets = input
+  const packets = input.split("\n")
     .filter(line => line !== "")
     .map(line => JSON.parse(line))
     .concat([divider1, divider2]);
@@ -73,4 +73,16 @@ export function part2(input: string[]): number {
   );
 
   return (divider1Index + 1) * (divider2Index + 1);
+}
+
+const input = (await Bun.file("../_input/2022/13.txt").text()).trimEnd();
+
+if (import.meta.env.NODE_ENV === "test") {
+  const { test, expect } = await import('bun:test');
+
+  test("part 1", () => expect(part1(input)).toBe(5852));
+  test("part 2", () => expect(part2(input)).toBe(24190));
+} else {
+  console.log("part 1:", part1(input));
+  console.log("part 2:", part2(input));
 }
