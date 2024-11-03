@@ -36,7 +36,7 @@ export function part2(input: string): number {
 const input = (await Bun.file("../_input/2022/06.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test("part 1", () => expect(part1(input)).toBe(1198));
   test("part 2", () => expect(part2(input)).toBe(3120));

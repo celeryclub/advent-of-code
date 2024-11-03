@@ -9,7 +9,10 @@ class Directory {
   public size = 0;
   public children: Directory[] = [];
 
-  constructor(public path: string, public parent?: Directory) {}
+  constructor(
+    public path: string,
+    public parent?: Directory
+  ) {}
 }
 
 function cd(root: Directory, cwd: Directory, path: string): Directory {
@@ -105,7 +108,7 @@ export function part2(input: string): number {
 const input = (await Bun.file("../_input/2022/07.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test("part 1", () => expect(part1(input)).toBe(1243729));
   test("part 2", () => expect(part2(input)).toBe(4443914));

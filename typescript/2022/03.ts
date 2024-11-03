@@ -6,7 +6,8 @@ function getPriority(char: string): number {
 }
 
 export function part1(input: string): number {
-  return input.split("\n")
+  return input
+    .split("\n")
     .map(contents => {
       const half1 = contents.substring(0, contents.length / 2);
       const half2 = contents.substring(contents.length / 2);
@@ -54,7 +55,7 @@ export function part2(input: string): number {
 const input = (await Bun.file("../_input/2022/03.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test("part 1", () => expect(part1(input)).toBe(8072));
   test("part 2", () => expect(part2(input)).toBe(2567));

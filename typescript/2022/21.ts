@@ -42,7 +42,7 @@ export function part1(input: string): number {
 const input = (await Bun.file("../_input/2022/21.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test("part 1", () => expect(part1(input)).toBe(121868120894282));
 } else {

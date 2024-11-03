@@ -138,7 +138,7 @@ function part1(input: string) {
 const input = (await Bun.file("../_input/2018/04.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test.skip("part 1", () => expect(part1(input)).toBe(0));
 } else {

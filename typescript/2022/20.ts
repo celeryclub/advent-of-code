@@ -8,7 +8,10 @@ enum Direction {
 }
 
 class Item {
-  constructor(public value: number, public index: number) {}
+  constructor(
+    public value: number,
+    public index: number
+  ) {}
 }
 
 function createItems(input: string) {
@@ -152,7 +155,7 @@ export function part1(input: string): number {
 const input = (await Bun.file("../_input/2022/06.txt").text()).trimEnd();
 
 if (import.meta.env.NODE_ENV === "test") {
-  const { test, expect } = await import('bun:test');
+  const { test, expect } = await import("bun:test");
 
   test.skip("part 1", () => expect(part1(input)).toBe(0));
 } else {
