@@ -92,7 +92,7 @@ function throwTo(monkey: Monkey, item: number): void {
   monkey.items.push(item);
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const monkeys = createMonkeys(input);
 
   const roundCount = 20;

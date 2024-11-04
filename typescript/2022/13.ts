@@ -29,7 +29,7 @@ function compareArrays(left: any[], right: any[]): number {
   return left.length < right.length ? -1 : 0;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const packetGroups = input.split("\n").reduce(
     (groups, line) => {
       line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
@@ -54,7 +54,7 @@ export function part1(input: string): number {
   return sortedPairIndexSum;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const divider1 = [[2]];
   const divider2 = [[6]];
 

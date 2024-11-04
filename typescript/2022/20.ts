@@ -31,7 +31,7 @@ function wrapIndex(index: number, length: number): number {
   // return index;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const originalList = createItems(input);
   const mixedList = [...originalList];
 

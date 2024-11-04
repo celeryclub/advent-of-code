@@ -25,11 +25,11 @@ function findUniqueCharacterSet(input: string, length: number): number {
   return -1;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   return findUniqueCharacterSet(input, 4);
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   return findUniqueCharacterSet(input, 14);
 }
 

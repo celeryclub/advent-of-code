@@ -34,7 +34,7 @@ function parseCommand(command: string) {
   return [parseInt(a, 10), parseInt(b, 10) - 1, parseInt(c, 10) - 1];
 }
 
-export function part1(input: string): string {
+function part1(input: string): string {
   const [stacks, commands] = parseInput(input);
 
   // Move crates around
@@ -47,7 +47,7 @@ export function part1(input: string): string {
   return stacks.map(stack => stack[stack.length - 1]).join("");
 }
 
-export function part2(input: string): string {
+function part2(input: string): string {
   const [stacks, commands] = parseInput(input);
 
   // Move crates around

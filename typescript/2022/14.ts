@@ -129,7 +129,7 @@ function dropSandWithFloor(filledSpace: Set<string>, lowestLedgeIndex: number): 
   }
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const [filledSpace, lowestLedgeIndex] = createRocks(input);
 
   let sandCount = 0;
@@ -141,7 +141,7 @@ export function part1(input: string): number {
   return sandCount;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const [filledSpace, lowestLedgeIndex] = createRocks(input);
 
   let sandCount = 0;

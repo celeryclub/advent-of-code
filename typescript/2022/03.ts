@@ -5,7 +5,7 @@ function getPriority(char: string): number {
   return charCode >= 97 ? charCode - 96 : charCode - 38;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   return input
     .split("\n")
     .map(contents => {
@@ -28,7 +28,7 @@ export function part1(input: string): number {
     .reduce((a, b) => a + b);
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const inputSplit = input.split("\n");
   const priorities: number[] = [];
 

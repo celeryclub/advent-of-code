@@ -88,14 +88,14 @@ function findSmallestMatchingDir(currentDir: Directory, spaceNeeded: number): nu
   return smallestMatchingSize;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const root = new Directory("/");
   buildFs(root, input.split("\n"));
 
   return sumMatchingDirSizes(root);
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const root = new Directory("/");
   buildFs(root, input.split("\n"));
 

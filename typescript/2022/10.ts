@@ -39,7 +39,7 @@ function renderPixelMatrix(pixelMatrix: boolean[][]): string {
   return lines.join("\n");
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const commands = buildCommands(input);
 
   let cycle = 0;
@@ -60,7 +60,7 @@ export function part1(input: string): number {
   return signalStrengthSum;
 }
 
-export function part2(input: string): string {
+function part2(input: string): string {
   const commands = buildCommands(input);
 
   let cycle = 0;

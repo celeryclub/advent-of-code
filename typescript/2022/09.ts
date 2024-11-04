@@ -86,14 +86,14 @@ function executeMovements(rope: Knot[], input: string): Set<string> {
   return tailPositionSet;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const rope = createRope(2);
   const tailPositionSet = executeMovements(rope, input);
 
   return tailPositionSet.size;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const rope = createRope(10);
   const tailPositionSet = executeMovements(rope, input);
 

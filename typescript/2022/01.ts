@@ -1,6 +1,6 @@
 // https://adventofcode.com/2022/day/1
 
-export function part1(input: string): number {
+function part1(input: string): number {
   let current = 0;
   let highest = 0;
 
@@ -18,7 +18,7 @@ export function part1(input: string): number {
   return highest;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const totals = [0];
 
   input.split("\n").forEach(numberString => {

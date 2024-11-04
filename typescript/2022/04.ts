@@ -5,7 +5,7 @@ function getRanges(line: string): [number, number, number, number] {
   return [parseInt(a, 10), parseInt(b, 10), parseInt(c, 10), parseInt(d, 10)];
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   let containedRangeCount = 0;
 
   input.split("\n").forEach(line => {
@@ -22,7 +22,7 @@ export function part1(input: string): number {
   return containedRangeCount;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   let overlappingRangeCount = 0;
 
   input.split("\n").forEach(line => {

@@ -4,7 +4,7 @@ function parseInput(input: string): number[][] {
   return input.split("\n").map(line => line.split("").map(char => parseInt(char, 10)));
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const trees = parseInput(input);
 
   // All edge trees are visible
@@ -56,7 +56,7 @@ export function part1(input: string): number {
   return edgeTreeCount + interiorVisibilityMatrix.flat().length;
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const trees = parseInput(input);
 
   const scenicScoreMatrix: number[][] = [];

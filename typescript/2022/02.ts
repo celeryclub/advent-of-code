@@ -95,7 +95,7 @@ function getScore(theirPlay: Play, myPlay: Play): number {
   return score;
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const strategyStrings = input.split("\n");
 
   const scores = strategyStrings.map(strategyString => {
@@ -110,7 +110,7 @@ export function part1(input: string): number {
   return scores.reduce((a, b) => a + b);
 }
 
-export function part2(input: string): number {
+function part2(input: string): number {
   const strategyStrings = input.split("\n");
 
   const scores = strategyStrings.map(strategyString => {

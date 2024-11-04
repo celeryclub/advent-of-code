@@ -33,7 +33,7 @@ function getValue(monkeys: Map<string, number | string[]>, key: string): number 
   return operate(operator, value1, value2);
 }
 
-export function part1(input: string): number {
+function part1(input: string): number {
   const monkeys = createMonkeys(input);
 
   return getValue(monkeys, "root");
