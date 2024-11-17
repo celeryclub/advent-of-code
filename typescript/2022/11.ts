@@ -57,33 +57,27 @@ class Monkey {
 function createMonkeys(input: string): Monkey[] {
   const monkeys: Monkey[] = [];
 
-  // Group lines by empty lines
-  const groupedInput = input.split("\n").reduce(
-    (groups, line) => {
-      line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
-      return groups;
-    },
-    [[]]
-  );
+  input
+    .split("\n\n")
+    .map(group => group.split("\n"))
+    .forEach(lines => {
+      const itemsMatch = lines[1].match(/(\d+),?/g);
+      const items = itemsMatch.map(item => parseInt(item, 10));
 
-  groupedInput.forEach(lines => {
-    const itemsMatch = lines[1].match(/(\d+),?/g);
-    const items = itemsMatch.map(item => parseInt(item, 10));
+      const operationMatch = lines[2].match(/(\+|\*) (.+)/);
+      const [_, operator, opValue] = operationMatch;
 
-    const operationMatch = lines[2].match(/(\+|\*) (.+)/);
-    const [_, operator, opValue] = operationMatch;
+      const testMatch = lines[3].match(/(\d+)$/);
+      const test = parseInt(testMatch[1], 10);
 
-    const testMatch = lines[3].match(/(\d+)$/);
-    const test = parseInt(testMatch[1], 10);
+      const ifTrueMatch = lines[4].match(/(\d+)$/);
+      const ifTrue = parseInt(ifTrueMatch[1], 10);
 
-    const ifTrueMatch = lines[4].match(/(\d+)$/);
-    const ifTrue = parseInt(ifTrueMatch[1], 10);
+      const ifFalseMatch = lines[5].match(/(\d+)$/);
+      const ifFalse = parseInt(ifFalseMatch[1], 10);
 
-    const ifFalseMatch = lines[5].match(/(\d+)$/);
-    const ifFalse = parseInt(ifFalseMatch[1], 10);
-
-    monkeys.push(new Monkey(items, operator, opValue, test, ifTrue, ifFalse));
-  });
+      monkeys.push(new Monkey(items, operator, opValue, test, ifTrue, ifFalse));
+    });
 
   return monkeys;
 }

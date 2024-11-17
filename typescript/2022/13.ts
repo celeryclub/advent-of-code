@@ -30,26 +30,21 @@ function compareArrays(left: any[], right: any[]): number {
 }
 
 function part1(input: string): number {
-  const packetGroups = input.split("\n").reduce(
-    (groups, line) => {
-      line === "" ? groups.push([]) : groups[groups.length - 1].push(line);
-      return groups;
-    },
-    [[]]
-  );
-
   let sortedPairIndexSum = 0;
 
-  packetGroups.forEach((group, index) => {
-    const left = JSON.parse(group[0]);
-    const right = JSON.parse(group[1]);
+  input
+    .split("\n\n")
+    .map(group => group.split("\n"))
+    .forEach((lines, index) => {
+      const left = JSON.parse(lines[0]);
+      const right = JSON.parse(lines[1]);
 
-    const result = compareArrays(left, right);
+      const result = compareArrays(left, right);
 
-    if (result === -1) {
-      sortedPairIndexSum += index + 1;
-    }
-  });
+      if (result === -1) {
+        sortedPairIndexSum += index + 1;
+      }
+    });
 
   return sortedPairIndexSum;
 }
