@@ -1,129 +1,54 @@
 // https://adventofcode.com/2022/day/2
 
-enum Play {
-  Rock = "Rock",
-  Paper = "Paper",
-  Scissors = "Scissors",
+// Input mapping: A/X -> 0, B/Y -> 1, C/Z -> 2
+function parseLine(line: string, encoder: TextEncoder): [number, number] {
+  const bytes = encoder.encode(line);
+
+  return [bytes.at(0) - 65, bytes.at(-1) - 88];
 }
 
-enum Result {
-  Lose = "Lose",
-  Draw = "Draw",
-  Win = "Win",
+// Outcome mapping: lose -> 0, draw -> 1, win -> 2
+function getOutcome(theirs: number, ours: number): number {
+  return (3 - ((2 + theirs - ours) % 3)) % 3;
 }
 
-const playMap = {
-  A: Play.Rock,
-  B: Play.Paper,
-  C: Play.Scissors,
-  X: Play.Rock,
-  Y: Play.Paper,
-  Z: Play.Scissors,
-};
-
-const resultMap = {
-  X: Result.Lose,
-  Y: Result.Draw,
-  Z: Result.Win,
-};
-
-const scoreMap = {
-  Rock: 1,
-  Paper: 2,
-  Scissors: 3,
-};
-
-function getResult(theirPlay: Play, myPlay: Play): Result {
-  if (theirPlay === myPlay) {
-    return Result.Draw;
+function getOurs(theirs: number, outcome: number): number {
+  switch (outcome) {
+    case 0:
+      return (theirs + 2) % 3;
+    case 1:
+      return theirs;
+    case 2:
+      return (theirs + 1) % 3;
   }
-
-  if (
-    (myPlay === Play.Rock && theirPlay === Play.Scissors) ||
-    (myPlay === Play.Paper && theirPlay === Play.Rock) ||
-    (myPlay === Play.Scissors && theirPlay === Play.Paper)
-  ) {
-    return Result.Win;
-  }
-
-  return Result.Lose;
-}
-
-function getMyPlay(theirPlay: Play, result: Result): Play {
-  if (result === Result.Draw) {
-    return theirPlay;
-  }
-
-  switch (result) {
-    case Result.Win:
-      if (theirPlay === Play.Rock) {
-        return Play.Paper;
-      }
-      if (theirPlay === Play.Paper) {
-        return Play.Scissors;
-      }
-      if (theirPlay === Play.Scissors) {
-        return Play.Rock;
-      }
-      break;
-    case Result.Lose:
-      if (theirPlay === Play.Rock) {
-        return Play.Scissors;
-      }
-      if (theirPlay === Play.Paper) {
-        return Play.Rock;
-      }
-      if (theirPlay === Play.Scissors) {
-        return Play.Paper;
-      }
-  }
-}
-
-function getScore(theirPlay: Play, myPlay: Play): number {
-  let score = scoreMap[myPlay];
-
-  const result = getResult(theirPlay, myPlay);
-
-  switch (result) {
-    case Result.Win:
-      score += 6;
-      break;
-    case Result.Draw:
-      score += 3;
-  }
-
-  return score;
 }
 
 function part1(input: string): number {
-  const strategyStrings = input.split("\n");
+  const encoder = new TextEncoder();
 
-  const scores = strategyStrings.map(strategyString => {
-    const [theirCode, myCode] = strategyString.split(" ");
+  return input
+    .split("\n")
+    .map(line => {
+      const [theirs, ours] = parseLine(line, encoder);
+      const outcome = getOutcome(theirs, ours);
 
-    const theirPlay = playMap[theirCode];
-    const myPlay = playMap[myCode];
-
-    return getScore(theirPlay, myPlay);
-  });
-
-  return scores.reduce((a, b) => a + b);
+      return outcome * 3 + ours + 1;
+    })
+    .reduce((a, b) => a + b);
 }
 
 function part2(input: string): number {
-  const strategyStrings = input.split("\n");
+  const encoder = new TextEncoder();
 
-  const scores = strategyStrings.map(strategyString => {
-    const [theirCode, resultCode] = strategyString.split(" ");
+  return input
+    .split("\n")
+    .map(line => {
+      const [theirs, outcome] = parseLine(line, encoder);
+      const ours = getOurs(theirs, outcome);
 
-    const theirPlay = playMap[theirCode];
-    const result = resultMap[resultCode];
-    const myPlay = getMyPlay(theirPlay, result);
-
-    return getScore(theirPlay, myPlay);
-  });
-
-  return scores.reduce((a, b) => a + b);
+      return outcome * 3 + ours + 1;
+    })
+    .reduce((a, b) => a + b);
 }
 
 const input = (await Bun.file("../_input/2022/02.txt").text()).trimEnd();

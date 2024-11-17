@@ -1,42 +1,25 @@
 // https://adventofcode.com/2022/day/4
 
-function getRanges(line: string): [number, number, number, number] {
+function parseLine(line: string): [number, number, number, number] {
   const [_, a, b, c, d] = line.match(/(\d+)-(\d+),(\d+)-(\d+)/)!;
+
   return [parseInt(a, 10), parseInt(b, 10), parseInt(c, 10), parseInt(d, 10)];
 }
 
 function part1(input: string): number {
-  let containedRangeCount = 0;
+  return input.split("\n").filter(line => {
+    const [start1, end1, start2, end2] = parseLine(line);
 
-  input.split("\n").forEach(line => {
-    const [range1Start, range1End, range2Start, range2End] = getRanges(line);
-
-    if (
-      (range1Start <= range2Start && range1End >= range2End) ||
-      (range2Start <= range1Start && range2End >= range1End)
-    ) {
-      containedRangeCount++;
-    }
-  });
-
-  return containedRangeCount;
+    return (start1 <= start2 && end1 >= end2) || (start2 <= start1 && end2 >= end1);
+  }).length;
 }
 
 function part2(input: string): number {
-  let overlappingRangeCount = 0;
+  return input.split("\n").filter(line => {
+    const [start1, end1, start2, end2] = parseLine(line);
 
-  input.split("\n").forEach(line => {
-    const [range1Start, range1End, range2Start, range2End] = getRanges(line);
-
-    if (
-      (range1Start <= range2Start && range1End >= range2Start) ||
-      (range2Start <= range1Start && range2End >= range1Start)
-    ) {
-      overlappingRangeCount++;
-    }
-  });
-
-  return overlappingRangeCount;
+    return (start1 <= start2 && end1 >= start2) || (start2 <= start1 && end2 >= start1);
+  }).length;
 }
 
 const input = (await Bun.file("../_input/2022/04.txt").text()).trimEnd();

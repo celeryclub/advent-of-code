@@ -1,31 +1,25 @@
 // https://adventofcode.com/2018/day/2
 
 function part1(input: string): number {
-  const ids = input.split("\n");
-
   let doubles = 0;
   let triples = 0;
 
-  ids.forEach(id => {
-    let previousCharacters = {};
+  input.split("\n").forEach(line => {
+    let charCounts = new Map();
 
-    for (let index = 0; index < id.length; index++) {
-      const character = id.charAt(index);
-
-      if (previousCharacters[character]) {
-        previousCharacters[character] = previousCharacters[character] + 1;
+    line.split("").forEach(char => {
+      if (charCounts.has(char)) {
+        charCounts.set(char, charCounts.get(char) + 1);
       } else {
-        previousCharacters[character] = 1;
+        charCounts.set(char, 1);
       }
-    }
+    });
 
-    const characterCountValues = Object.values(previousCharacters);
-
-    if (characterCountValues.filter(characterCount => characterCount === 2).length) {
+    if (charCounts.values().find(charCount => charCount === 2)) {
       doubles++;
     }
 
-    if (characterCountValues.filter(characterCount => characterCount === 3).length) {
+    if (charCounts.values().find(charCount => charCount === 3)) {
       triples++;
     }
   });

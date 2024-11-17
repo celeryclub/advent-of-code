@@ -8,12 +8,12 @@ function findUniqueCharacterSet(input: string, length: number): number {
     const matchIndex = recentUniqueChars.indexOf(char);
 
     if (matchIndex !== -1) {
-      // If this char is already in the list,
-      // remove the chars up to the match and add the new char
+      // If this char is already in the list, remove
+      // the chars up to the match and add the new char
       recentUniqueChars.splice(0, matchIndex + 1);
       recentUniqueChars.push(char);
     } else {
-      // If not, just add the char to the list
+      // If not, just add the new char to the list
       recentUniqueChars.push(char);
 
       if (recentUniqueChars.length === length) {

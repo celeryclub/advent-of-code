@@ -1,43 +1,28 @@
 // https://adventofcode.com/2022/day/1
 
 function part1(input: string): number {
-  let current = 0;
-  let highest = 0;
+  const totals = input.split("\n\n").map(group =>
+    group
+      .split("\n")
+      .map(line => parseInt(line, 10))
+      .reduce((a, b) => a + b)
+  );
 
-  input.split("\n").forEach(numberString => {
-    const num = parseInt(numberString, 10);
-
-    if (!isNaN(num)) {
-      current += num;
-    } else {
-      highest = Math.max(highest, current);
-      current = 0;
-    }
-  });
-
-  return highest;
+  return Math.max(...totals);
 }
 
 function part2(input: string): number {
-  const totals = [0];
+  const totals = input.split("\n\n").map(group =>
+    group
+      .split("\n")
+      .map(line => parseInt(line, 10))
+      .reduce((a, b) => a + b)
+  );
 
-  input.split("\n").forEach(numberString => {
-    const num = parseInt(numberString, 10);
-
-    if (!isNaN(num)) {
-      totals[totals.length - 1] += num;
-    } else {
-      totals.push(0);
-    }
-  });
-
-  const sortedTotals = totals
-    .sort(function (a, b) {
-      return a - b;
-    })
-    .reverse();
-
-  return sortedTotals[0] + sortedTotals[1] + sortedTotals[2];
+  return totals
+    .toSorted((a, b) => b - a)
+    .slice(0, 3)
+    .reduce((a, b) => a + b);
 }
 
 const input = (await Bun.file("../_input/2022/01.txt").text()).trimEnd();

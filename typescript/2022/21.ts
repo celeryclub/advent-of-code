@@ -1,6 +1,19 @@
 // https://adventofcode.com/2022/day/21
 
-import { operate } from "../lib/math";
+function operate(operator: string, x: number, y: number): number {
+  switch (operator) {
+    case "+":
+      return x + y;
+    case "-":
+      return x - y;
+    case "*":
+      return x * y;
+    case "/":
+      return x / y;
+    default:
+      return NaN;
+  }
+}
 
 function createMonkeys(input: string): Map<string, number | string[]> {
   const monkeys = new Map<string, number | string[]>();

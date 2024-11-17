@@ -1,17 +1,18 @@
 // https://adventofcode.com/2022/day/10
 
+const CRT_WIDTH = 40;
+const CRT_HEIGHT = 6;
+
 function buildCommands(input: string): number[] {
   const commands: number[] = [];
 
   input.split("\n").forEach(line => {
     const addMatch = line.match(/^addx (-?\d+)/);
 
+    commands.push(0);
+
     if (addMatch) {
-      const value = parseInt(addMatch[1]);
-      commands.push(0);
-      commands.push(value);
-    } else {
-      commands.push(0);
+      commands.push(parseInt(addMatch[1], 10));
     }
   });
 
@@ -19,35 +20,31 @@ function buildCommands(input: string): number[] {
 }
 
 function renderPixelMatrix(pixelMatrix: boolean[][]): string {
-  const crt_width = 40;
-  const crt_height = 6;
+  let output = "";
 
-  const lines: string[] = [];
-
-  for (let i = 0; i < crt_height; i++) {
-    lines[i] = "";
-
-    for (let j = 0; j < crt_width; j++) {
-      if (pixelMatrix[i]?.[j] === true) {
-        lines[i] += "#";
+  for (let i = 0; i < CRT_HEIGHT; i++) {
+    for (let j = 0; j < CRT_WIDTH; j++) {
+      if (pixelMatrix[i][j]) {
+        output += "#";
       } else {
-        lines[i] += ".";
+        output += ".";
       }
+    }
+
+    if (i < CRT_HEIGHT - 1) {
+      output += "\n";
     }
   }
 
-  return lines.join("\n");
+  return output;
 }
 
 function part1(input: string): number {
-  const commands = buildCommands(input);
-
   let cycle = 0;
   let x = 1;
-
   let signalStrengthSum = 0;
 
-  commands.forEach(command => {
+  buildCommands(input).forEach(command => {
     cycle++;
 
     if ((cycle - 20) % 40 === 0) {
@@ -61,16 +58,14 @@ function part1(input: string): number {
 }
 
 function part2(input: string): string {
-  const commands = buildCommands(input);
-
   let cycle = 0;
   let x = 1;
-
   const pixelMatrix: boolean[][] = [];
+
   let i = 0;
   let j = 0;
 
-  commands.forEach(command => {
+  buildCommands(input).forEach(command => {
     cycle++;
 
     if (Math.abs(x - j) <= 1) {

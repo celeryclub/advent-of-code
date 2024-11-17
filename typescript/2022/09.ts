@@ -5,53 +5,40 @@ interface Knot {
   y: number;
 }
 
-function createRope(length: number): Knot[] {
-  const rope: Knot[] = [];
-
-  for (let i = 0; i < length; i++) {
-    rope.push({ x: 0, y: 0 });
-  }
-
-  return rope;
-}
-
-function moveHead(rope: Knot[], direction: string): void {
-  const head = rope[0];
-
-  switch (direction) {
-    case "U":
-      head.y -= 1;
-      break;
-    case "R":
-      head.x += 1;
-      break;
-    case "D":
-      head.y += 1;
-      break;
-    case "L":
-      head.x -= 1;
-      break;
-  }
-}
-
-function move(rope: Knot[], tailPositionSet: Set<string>, direction: string, distance: number): void {
+function moveRope(rope: Knot[], tailPositionSet: Set<string>, direction: string, distance: number): void {
   for (let i = 0; i < distance; i++) {
     // Move head knot one position
-    moveHead(rope, direction);
+    const head = rope[0];
+
+    switch (direction) {
+      case "U":
+        head.y -= 1;
+        break;
+      case "R":
+        head.x += 1;
+        break;
+      case "D":
+        head.y += 1;
+        break;
+      case "L":
+        head.x -= 1;
+        break;
+    }
 
     // Move each subsequent knot if needed
     for (let j = 1; j < rope.length; j++) {
-      const current = rope[j];
       const previous = rope[j - 1];
+      const current = rope[j];
 
       const horizontalDistance = previous.x - current.x;
       const verticalDistance = previous.y - current.y;
 
-      if (
-        Math.abs(horizontalDistance) >= 1 &&
-        Math.abs(verticalDistance) >= 1 &&
-        (Math.abs(horizontalDistance) > 1 || Math.abs(verticalDistance) > 1)
-      ) {
+      if (horizontalDistance === 0 && verticalDistance === 0) {
+        // We're all caught up, so no further movement is needed
+        break;
+      }
+
+      if (Math.abs(horizontalDistance) > 1 || Math.abs(verticalDistance) > 1) {
         // Move diagonally
         current.x += Math.sign(horizontalDistance);
         current.y += Math.sign(verticalDistance);
@@ -72,32 +59,27 @@ function move(rope: Knot[], tailPositionSet: Set<string>, direction: string, dis
   }
 }
 
-function executeMovements(rope: Knot[], input: string): Set<string> {
+function countTailPositions(length: number, input: string): number {
+  const rope = [...Array(length)].map(() => ({ x: 0, y: 0 }));
   const tailPositionSet = new Set<string>();
 
   input.split("\n").forEach(line => {
     const match = line.match(/(\w) (\d+)/)!;
     const direction = match[1];
-    const distance = parseInt(match[2]);
+    const distance = parseInt(match[2], 10);
 
-    move(rope, tailPositionSet, direction, distance);
+    moveRope(rope, tailPositionSet, direction, distance);
   });
 
-  return tailPositionSet;
+  return tailPositionSet.size;
 }
 
 function part1(input: string): number {
-  const rope = createRope(2);
-  const tailPositionSet = executeMovements(rope, input);
-
-  return tailPositionSet.size;
+  return countTailPositions(2, input);
 }
 
 function part2(input: string): number {
-  const rope = createRope(10);
-  const tailPositionSet = executeMovements(rope, input);
-
-  return tailPositionSet.size;
+  return countTailPositions(10, input);
 }
 
 const input = (await Bun.file("../_input/2022/09.txt").text()).trimEnd();

@@ -1,36 +1,29 @@
 // https://adventofcode.com/2018/day/1
 
 function part1(input: string): number {
-  const numbers = input.split("\n").map(number => parseInt(number));
-
-  const total = numbers.reduce((accumulator, number) => {
-    return accumulator + number;
-  }, 0);
-
-  return total;
+  return input
+    .split("\n")
+    .map(num => parseInt(num, 10))
+    .reduce((a, b) => a + b);
 }
 
 function part2(input: string): number {
   const numbers = input.split("\n").map(number => parseInt(number));
+  const knownFrequencies = new Set();
 
   let frequency = 0;
   let index = 0;
-  let knownFrequencies = {};
 
   while (true) {
-    frequency = frequency + numbers[index];
+    frequency += numbers[index % numbers.length];
 
-    if (knownFrequencies[frequency.toString()]) {
+    if (knownFrequencies.has(frequency)) {
       return frequency;
     }
 
-    knownFrequencies[frequency.toString()] = true;
+    knownFrequencies.add(frequency);
 
-    if (index < numbers.length - 1) {
-      index++;
-    } else {
-      index = 0;
-    }
+    index++;
   }
 }
 

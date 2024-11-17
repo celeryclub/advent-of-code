@@ -7,7 +7,7 @@ function parseInput(input: string): [string[][], string[]] {
   const cratesInput = inputSplit.slice(0, dividerLineIndex);
   const commandsInput = inputSplit.slice(dividerLineIndex + 1);
 
-  const columnLabelLine = cratesInput[cratesInput.length - 1];
+  const columnLabelLine = cratesInput.at(-1);
 
   // Find column indexes
   const columnIndexes = columnLabelLine

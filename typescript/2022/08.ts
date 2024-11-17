@@ -6,14 +6,12 @@ function parseInput(input: string): number[][] {
 
 function part1(input: string): number {
   const trees = parseInput(input);
+  const interiorVisibilityMatrix: boolean[][] = [];
 
   // All edge trees are visible
   const edgeTreeCount = trees[0].length * 2 + (trees.length - 2) * 2;
 
-  const interiorVisibilityMatrix: boolean[][] = [];
-  let highestSoFar: number;
-
-  const checkIfVisible = (i: number, j: number) => {
+  const checkVisibility = (highestSoFar: number, i: number, j: number) => {
     const height = trees[i][j];
 
     if (height > highestSoFar) {
@@ -22,34 +20,35 @@ function part1(input: string): number {
     }
   };
 
-  // Find interior trees that are visible by looking at each line up and down or left and right
+  // Look through each row for visible trees
   for (let i = 1; i < trees.length - 1; i++) {
     interiorVisibilityMatrix[i] = [];
 
     // Left to right
-    highestSoFar = trees[i][0];
+    const highestSoFarLeft = trees[i][0];
     for (let j = 1; j < trees[i].length - 1; j++) {
-      checkIfVisible(i, j);
+      checkVisibility(highestSoFarLeft, i, j);
     }
 
     // Right to left
-    highestSoFar = trees[i][trees[i].length - 1];
+    const highestSoFarRight = trees[i][trees[i].length - 1];
     for (let j = trees[i].length - 2; j > 0; j--) {
-      checkIfVisible(i, j);
+      checkVisibility(highestSoFarRight, i, j);
     }
   }
 
+  // Look through each column for visible trees
   for (let j = 1; j < trees[0].length - 1; j++) {
     // Top to bottom
-    highestSoFar = trees[0][j];
+    const highestSoFarTop = trees[0][j];
     for (let i = 1; i < trees.length - 1; i++) {
-      checkIfVisible(i, j);
+      checkVisibility(highestSoFarTop, i, j);
     }
 
     // Bottom to top
-    highestSoFar = trees[trees.length - 1][j];
+    const highestSoFarBottom = trees[trees.length - 1][j];
     for (let i = trees.length - 2; i > 0; i--) {
-      checkIfVisible(i, j);
+      checkVisibility(highestSoFarBottom, i, j);
     }
   }
 
@@ -58,10 +57,9 @@ function part1(input: string): number {
 
 function part2(input: string): number {
   const trees = parseInput(input);
-
   const scenicScoreMatrix: number[][] = [];
 
-  // Loop through the matrix
+  // Visit every tree and look left, right, up, and down
   // All edge trees have a score of 0, so we can ignore them
   for (let i = 1; i < trees.length - 1; i++) {
     scenicScoreMatrix[i] = [];
@@ -69,30 +67,29 @@ function part2(input: string): number {
     for (let j = 1; j < trees[i].length - 1; j++) {
       const height = trees[i][j];
 
-      let rightScore = 0;
-      let leftScore = 0;
-      let downScore = 0;
-      let upScore = 0;
-
       // Look right
+      let rightScore = 0;
       for (let localJ = j + 1; localJ < trees[i].length; localJ++) {
         rightScore++;
         if (height <= trees[i][localJ]) break;
       }
 
       // Look left
+      let leftScore = 0;
       for (let localJ = j - 1; localJ >= 0; localJ--) {
         leftScore++;
         if (height <= trees[i][localJ]) break;
       }
 
       // Look down
+      let downScore = 0;
       for (let localI = i + 1; localI < trees.length; localI++) {
         downScore++;
         if (height <= trees[localI][j]) break;
       }
 
       // Look up
+      let upScore = 0;
       for (let localI = i - 1; localI >= 0; localI--) {
         upScore++;
         if (height <= trees[localI][j]) break;

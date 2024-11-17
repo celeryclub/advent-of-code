@@ -1,7 +1,10 @@
 // https://adventofcode.com/2022/day/3
 
-function getPriority(char: string): number {
+import chunk from "lodash.chunk";
+
+function charPriority(char: string): number {
   const charCode = char.charCodeAt(0);
+
   return charCode >= 97 ? charCode - 96 : charCode - 38;
 }
 
@@ -11,45 +14,21 @@ function part1(input: string): number {
     .map(contents => {
       const half1 = contents.substring(0, contents.length / 2);
       const half2 = contents.substring(contents.length / 2);
+      const char = half1.split("").find(char => half2.includes(char));
 
-      let matchingChar: string;
-
-      for (let i = 0; i < half2.length; i++) {
-        const half2Char = half2[i];
-
-        if (half1.indexOf(half2Char) !== -1) {
-          matchingChar = half2Char;
-          break;
-        }
-      }
-
-      return getPriority(matchingChar);
+      return charPriority(char);
     })
     .reduce((a, b) => a + b);
 }
 
 function part2(input: string): number {
-  const inputSplit = input.split("\n");
-  const priorities: number[] = [];
+  return chunk(input.split("\n"), 3)
+    .map(group => {
+      const char = group[0].split("").find(char => group[1].includes(char) && group[2].includes(char));
 
-  for (let i = 2; i < inputSplit.length; i += 3) {
-    const contents = inputSplit[i];
-
-    let matchingChar: string;
-
-    for (let j = 0; j < contents.length; j++) {
-      const thisChar = contents[j];
-
-      if (inputSplit[i - 1].indexOf(thisChar) !== -1 && inputSplit[i - 2].indexOf(thisChar) !== -1) {
-        matchingChar = thisChar;
-        break;
-      }
-    }
-
-    priorities.push(getPriority(matchingChar));
-  }
-
-  return priorities.reduce((a, b) => a + b);
+      return charPriority(char);
+    })
+    .reduce((a, b) => a + b);
 }
 
 const input = (await Bun.file("../_input/2022/03.txt").text()).trimEnd();
